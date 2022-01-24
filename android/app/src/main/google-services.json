@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "301834280291",
+    "project_id": "solarkita-app",
+    "storage_bucket": "solarkita-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:301834280291:android:662670f1d0f45599f68756",
+        "android_client_info": {
+          "package_name": "com.solarkita.solar_kita"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "301834280291-tlk4qn2efm6t42m7rag05fapdplr2b2m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAEL-sBXQYuIq7jB4n4d-pkg5SfOIZem28"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "301834280291-tlk4qn2efm6t42m7rag05fapdplr2b2m.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "301834280291-46h4m6b4l2getgqrvchj8ucl8q2vvnb8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.solarkita.app-ios"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

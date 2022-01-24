@@ -1,0 +1,44 @@
+name: solar_kita
+description: A new Flutter application.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  fluttertoast: ^7.1.1
+  shared_preferences: ^0.5.10
+  fl_chart: ^0.36.2
+  expandable: ^5.0.1
+  webview_flutter: ^2.0.10
+  path_provider: ^1.6.28
+  share: ^2.0.4
+  http: ^0.13.4
+  flutter_bloc: ^6.0.5
+  intl: ^0.17.0
+  flutter_datetime_picker: ^1.5.1
+  flutter_html: ^0.8.2
+  dio: ^4.0.4
+  open_file: ^3.2.1
+  url_launcher: ^5.7.10
+  firebase_core: ^0.7.0
+  firebase_messaging: ^8.0.0-dev.15
+  onesignal_flutter: ^3.2.7
+  floor: ^1.2.0
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  floor_generator: ^1.2.0
+  build_runner: ^2.1.2
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/
