@@ -41,6 +41,8 @@ class Datum {
     this.status,
     this.createdAt,
     this.updatedAt,
+    this.date,
+    this.time
   });
 
   int id;
@@ -54,6 +56,8 @@ class Datum {
   int status;
   DateTime createdAt;
   DateTime updatedAt;
+  String date;
+  String time;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
     id: json["id"],
@@ -65,8 +69,10 @@ class Datum {
     address: addressValues.map[json["address"]],
     message: json["message"],
     status: json["status"],
-    createdAt: DateTime.parse(json["created_at"]),
+    createdAt: DateTime.parse(json["created_at"]).toLocal(),
     updatedAt: DateTime.parse(json["updated_at"]),
+    date: json["date"],
+    time: json["time"],
   );
 
   Map<String, dynamic> toJson() => {

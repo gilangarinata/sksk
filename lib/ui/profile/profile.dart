@@ -14,6 +14,7 @@ import 'package:solar_kita/ui/profile/privacypolicy.dart';
 import 'package:solar_kita/ui/profile/termconditions.dart';
 import 'package:solar_kita/ui/profile/updateprofile/updateprofile.dart';
 import 'package:solar_kita/utils/tools.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -21,6 +22,11 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+
+  _launchWhatsapp() async {
+    const url = "https://api.whatsapp.com/send/?phone=%2B6281311269988&text&app_absent=0";
+    await launch(url);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -131,7 +137,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Divider(),
                     InkWell(
                       onTap: (){
-                        Tools.addScreen(context, ContactUsScreen());
+                        _launchWhatsapp();
+                        // Tools.addScreen(context, ContactUsScreen());
                       },
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20,vertical: 10),

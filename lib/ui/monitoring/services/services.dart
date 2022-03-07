@@ -49,6 +49,8 @@ class _ServicesScreenState extends State<ServicesScreenChild> {
     HelpType("Lain-lain", 4),
   ];
 
+  TextEditingController messageController;
+
   bool postingLoading = false;
   ServiceBloc bloc;
   ServiceType selectedService;
@@ -74,6 +76,7 @@ class _ServicesScreenState extends State<ServicesScreenChild> {
     selectedService = services[0];
     serviceController.text = selectedService.name;
     selectedHelpType = helpType[0];
+    messageController = TextEditingController();
     loadActivities();
   }
 
@@ -156,6 +159,11 @@ class _ServicesScreenState extends State<ServicesScreenChild> {
           setState(() {
             postingLoading = false;
             MySnackbar.successSnackbar(context, "Sukses");
+            setState(() {
+              currentDate = "Select Date";
+              currentTime = "Select Time";
+            });
+            messageController.clear();
             loadActivities();
           });
         }else if(state is HelpCenterListLoaded){
@@ -234,15 +242,16 @@ class _ServicesScreenState extends State<ServicesScreenChild> {
                     DatePicker.showDatePicker(context,
                         showTitleActions: true,
                         minTime: DateTime(2018, 3, 5),
-                        maxTime: DateTime(2019, 6, 7), onChanged: (date) {
+                        maxTime: DateTime(2030, 6, 7), onChanged: (date) {
                           print('change $date');
                         }, onConfirm: (date) {
                           print('confirm $date');
                           setState(() {
-                            currentDate = DateFormat('yyyy-MM-dd 00:00:00').format(date);
+                            currentDate = DateFormat('yyyy-MM-dd').format(date);
                             print('change $currentDate');
                           });
-                        }, currentTime: DateTime.now(), locale: LocaleType.id);
+                        },
+                        currentTime: DateTime.now(), locale: LocaleType.id);
                   },
                   child: Card(
                     shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(15),),
@@ -254,7 +263,7 @@ class _ServicesScreenState extends State<ServicesScreenChild> {
                           child: MyText.myTextDescription(currentDate, MyColors.grey_60),
                         ),
                         IconButton(icon: Icon(Icons.calendar_today, color: Color(0xff00897B), size: 25), onPressed: () {
-                          _showHelpTypeDialog(context);
+                          // _showHelpTypeDialog(context);
                         }),
                       ],
                     ),
@@ -287,7 +296,7 @@ class _ServicesScreenState extends State<ServicesScreenChild> {
                           child: MyText.myTextDescription(currentTime, MyColors.grey_60),
                         ),
                         IconButton(icon: Icon(Icons.access_time_sharp, color: Color(0xff00897B), size: 25), onPressed: () {
-                          _showHelpTypeDialog(context);
+                          // _showHelpTypeDialog(context);
                         }),
                       ],
                     ),
@@ -306,6 +315,7 @@ class _ServicesScreenState extends State<ServicesScreenChild> {
                     SizedBox(width: 20,),
                     Expanded(
                       child: TextField(
+                        controller: messageController,
                         keyboardType: TextInputType.multiline,
                         decoration: new InputDecoration.collapsed(
                             hintText: 'Message'

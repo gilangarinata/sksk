@@ -15,6 +15,11 @@ class MaintenanceActivities extends StatelessWidget {
 
   Widget getList(Datum data, int number){
     var formattedDate = DateFormat("dd-MM-yyyy HH:mm").format(data.createdAt);
+    if(data.date != null && data.time != null){
+      var date = DateFormat("dd-MM-yyyy").format(data.date);
+      var time = data.time;
+      formattedDate = "$date $time";
+    }
     var status = "";
     if(data.status == 1) status = "Marked"; else status = "Unmarked";
     return Container(

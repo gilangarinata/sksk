@@ -9,6 +9,7 @@ import 'package:solar_kita/res/my_strings.dart';
 import 'package:solar_kita/res/my_text.dart';
 import 'package:solar_kita/ui/koinkita/detailvouchers/DetailVoucherScreen.dart';
 import 'package:solar_kita/ui/koinkita/widget/VoucherCard.dart';
+import 'package:solar_kita/ui/profile/profile.dart';
 import 'package:solar_kita/utils/tools.dart';
 
 class MyVouchersList extends StatefulWidget {
@@ -63,9 +64,14 @@ class _MyVouchersListState extends State<MyVouchersList> {
         ),
         centerTitle: true,
         actions: [
-          CircleAvatar(
-            backgroundColor: MyColors.accentDark,
-            child: Icon(Icons.person_outline),
+          InkWell(
+            onTap: (){
+              Tools.addScreen(context, ProfileScreen());
+            },
+            child: CircleAvatar(
+              backgroundColor: MyColors.accentDark,
+              child: Icon(Icons.person_outline),
+            ),
           ),
           SizedBox(
             width: 20,

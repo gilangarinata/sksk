@@ -10,19 +10,17 @@ import 'package:solar_kita/res/my_text.dart';
 import 'package:solar_kita/ui/monitoring/services/service_bloc.dart';
 import 'package:solar_kita/ui/monitoring/services/service_event.dart';
 import 'package:solar_kita/ui/monitoring/services/service_state.dart';
-import 'package:solar_kita/ui/notification/notification_detail.dart';
-import 'package:solar_kita/utils/tools.dart';
 import 'package:solar_kita/widget/my_snackbar.dart';
 import 'package:solar_kita/widget/progress_loading.dart';
 
 import 'notification_model.dart';
 
-class NotificationScreen extends StatelessWidget {
+class NotificationDetailScreen extends StatelessWidget {
 
   Function(int) itemClick;
 
 
-  NotificationScreen({this.itemClick});
+  NotificationDetailScreen({this.itemClick});
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +62,7 @@ class _NotificationScreenState extends State<NotificationScreenContent> {
 
   List<Widget> generateNotif(){
     if(_notificationModel != null){
-      List<Widget> wd = _notificationModel.data.take(5).map((e) => Card(
+      return _notificationModel.data.map((e) => Card(
         elevation: 2,
         child: Container(
           padding: EdgeInsets.all(20),
@@ -106,21 +104,6 @@ class _NotificationScreenState extends State<NotificationScreenContent> {
           ),
         ),
       )).toList();
-      wd.add(Card(
-        child: InkWell(
-          onTap: (){
-            Tools.addScreen(context, NotificationDetailScreen());
-          },
-          child: Container(
-            width: double.infinity,
-            padding: EdgeInsets.symmetric(vertical: 10),
-            child: Center(
-              child: Text("See More"),
-            ),
-          ),
-        ),
-      ));
-      return wd;
     }else{
       return [Container()];
     }

@@ -41,7 +41,7 @@ class Datum {
     this.message,
     this.status,
     this.createdAt,
-    this.updatedAt,
+    this.updatedAt
   });
 
   int id;
