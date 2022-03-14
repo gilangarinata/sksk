@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:solar_kita/res/my_colors.dart';
 import 'package:solar_kita/res/my_strings.dart';
 import 'package:solar_kita/res/my_text.dart';
@@ -27,6 +28,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
     const url = "https://api.whatsapp.com/send/?phone=%2B6281311269988&text&app_absent=0";
     await launch(url);
   }
+
+  String selectedProfileImage = "";
+
+  void getSelectedProfileImage() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      selectedProfileImage = prefs.getString("AVATAR-IMAGE");
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getSelectedProfileImage();
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -68,12 +87,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: Column(
                   children: [
                     CircleAvatar(
-                      child: Icon(Icons.person),
+                      child: ClipRRect(
+                        borderRadius:BorderRadius.circular(50),
+                        child: selectedProfileImage == null ? Image.asset("assets/avatar1.png")  : Image.asset(selectedProfileImage),
+                      ),
                       radius: 40,
                       backgroundColor: MyColors.accentDark,
                     ),
                     SizedBox(height: 10,),
-                    MyText.myTextHeader2("Username", MyColors.accentDark)
+                    // MyText.myTextHeader2("Username", MyColors.accentDark)
                   ],
                 )
               ),
@@ -87,7 +109,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Divider(),
                     InkWell(
                       onTap: (){
-                        Tools.addScreen(context, UpdateProfileScreen());
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => UpdateProfileScreen(),
+                          ),
+                        ).then((value)  => getSelectedProfileImage());
                       },
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20,vertical: 10),

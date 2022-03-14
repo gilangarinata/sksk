@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:solar_kita/res/my_colors.dart';
 import 'package:solar_kita/res/my_strings.dart';
 import 'package:solar_kita/res/my_text.dart';
@@ -24,9 +25,19 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
 
   String _title = MyStrings.monitoring;
 
+  String selectedProfileImage = "";
+
+  void getSelectedProfileImage() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      selectedProfileImage = prefs.getString("AVATAR-IMAGE");
+    });
+  }
+
   @override
   void initState() {
     super.initState();
+    getSelectedProfileImage();
     _tabController = TabController(length: 4, vsync: this);
     var count = 0;
     _tabController.addListener((){
@@ -56,6 +67,7 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
       case 3: _title = MyStrings.media;
       break;
     }
+    getSelectedProfileImage();
   }
 
   @override
@@ -78,7 +90,10 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
             },
             child: CircleAvatar(
               backgroundColor: MyColors.accentDark,
-              child: Icon(Icons.person_outline),
+              child: ClipRRect(
+                borderRadius:BorderRadius.circular(50),
+                child: selectedProfileImage == null ? Image.asset("assets/avatar1.png")  : Image.asset(selectedProfileImage),
+              ),
             ),
           ),
           SizedBox(width: 20,)
