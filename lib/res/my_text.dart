@@ -20,7 +20,7 @@ class MyText {
       maxLines: 2,
       text: TextSpan(
         style: TextStyle(
-            color: color, fontSize: 16.0, fontWeight: FontWeight.bold),
+            color: color, fontSize: 16.0),
         text: title,
       ),
     );

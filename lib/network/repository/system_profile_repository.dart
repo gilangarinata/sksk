@@ -103,12 +103,12 @@ class SystemProfileRepositoryImpl implements SystemProfileRepository {
           throw Exception("---parseFailed");
         }
       } else {
+        _logout();
         Tools.stackTracer(StackTrace.current, "Error", 501);
         throw Exception("---noData");
       }
     } else {
       if(response.statusCode == 401){
-        _logout();
         throw Exception("Unauthorized");
       }
       Tools.stackTracer(StackTrace.current, response.body, response.statusCode);

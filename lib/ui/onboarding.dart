@@ -59,9 +59,11 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 child: Align(
                     alignment: Alignment.centerRight,
                     child: InkWell(
-                      onTap: (){
+                      onTap: () async{
                         if(isLast){
                           Tools.changeScreen(context, LoginScreen());
+                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                          prefs.setBool("skipIntro", true);
                         }else{
                           pageController.nextPage(duration: Duration(milliseconds: 500), curve: Curves.easeIn);
                         }

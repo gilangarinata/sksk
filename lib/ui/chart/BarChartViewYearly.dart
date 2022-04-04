@@ -120,7 +120,7 @@ class BarChartYearlyState extends State<BarChartYearly> {
                         getTextStyles: (value) => const TextStyle(
                             color: MyColors.grey_60, fontWeight: FontWeight.normal, fontSize: 10),
                         margin: 10,
-                        interval: 200,
+                        interval: 1000,
                         reservedSize: 43,
                         getTitles: (value) {
                           return value.toInt().toString() + " kWh";

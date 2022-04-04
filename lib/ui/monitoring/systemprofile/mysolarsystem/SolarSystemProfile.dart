@@ -83,7 +83,7 @@ class SolarSystemProfile extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   width: size.width / 2,
                   child: MyText.myTextDescription(
-                      ": "+ (solarSystemProfle != null ? solarSystemProfle[0].modules : "-"), MyColors.grey_60)),
+                      ": "+ (solarSystemProfle != null ? solarSystemProfle[0].modules.toString() : "-"), MyColors.grey_60)),
             ],
           ),
           SizedBox(height: 10,),

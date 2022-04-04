@@ -10,6 +10,7 @@ import 'package:solar_kita/ui/dashboard.dart';
 import 'package:solar_kita/ui/login/login_bloc.dart';
 import 'package:solar_kita/ui/login/login_event.dart';
 import 'package:solar_kita/ui/login/login_state.dart';
+import 'package:solar_kita/ui/profile/forgotpassword.dart';
 import 'package:solar_kita/utils/tools.dart';
 import 'package:solar_kita/utils/validator.dart';
 import 'package:solar_kita/widget/my_snackbar.dart';
@@ -65,6 +66,10 @@ class _LoginScreenChildState extends State<LoginScreenChild> {
             setState(() {
               _isLoading = false;
               Tools.changeScreen(context, DashboardScreen());
+            });
+          }else if (state is LoadingState) {
+            setState(() {
+              _isLoading = true;
             });
           }
         },
@@ -145,7 +150,11 @@ class _LoginScreenChildState extends State<LoginScreenChild> {
                           },
                         ),
                         Spacer(),
-                        MyText.myTextDescription(MyStrings.forgotPass, Colors.red)
+                        InkWell(
+                            onTap: (){
+                              Tools.addScreen(context, ForgotPassword());
+                            },
+                            child: MyText.myTextDescription(MyStrings.forgotPass, Colors.red))
                       ],
                     ),
                     SizedBox(height: 20,),

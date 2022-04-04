@@ -10,12 +10,13 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginBloc(this.repository) : super(null);
 
   @override
-  LoginState get initialState => null;
+  LoginState get initialState => InitialState();
 
   @override
   Stream<LoginState> mapEventToState(LoginEvent event) async* {
     if (event is ProcessLogin) {
       try {
+        yield LoadingState();
         LoginResponse items = await repository.processLogin(event.username, event.password);
         print("login sukses");
         yield LoginSuccess(items: items);

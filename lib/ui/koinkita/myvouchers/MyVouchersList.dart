@@ -64,15 +64,15 @@ class _MyVouchersListState extends State<MyVouchersList> {
         ),
         centerTitle: true,
         actions: [
-          InkWell(
-            onTap: (){
-              Tools.addScreen(context, ProfileScreen());
-            },
-            child: CircleAvatar(
-              backgroundColor: MyColors.accentDark,
-              child: Icon(Icons.person_outline),
-            ),
-          ),
+          // InkWell(
+          //   onTap: (){
+          //     Tools.addScreen(context, ProfileScreen());
+          //   },
+          //   child: CircleAvatar(
+          //     backgroundColor: MyColors.accentDark,
+          //     child: Icon(Icons.person_outline),
+          //   ),
+          // ),
           SizedBox(
             width: 20,
           )

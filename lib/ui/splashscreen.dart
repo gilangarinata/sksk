@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:solar_kita/prefmanager/pref_data.dart';
 import 'package:solar_kita/res/my_colors.dart';
 import 'package:solar_kita/ui/dashboard.dart';
+import 'package:solar_kita/ui/login/login_screen.dart';
 import 'package:solar_kita/ui/onboarding.dart';
 import 'package:solar_kita/utils/tools.dart';
 import 'package:solar_kita/widget/progress_loading.dart';
@@ -16,10 +17,18 @@ class SplashScreen extends StatelessWidget {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       bool isLoggedIn = prefs.containsKey(PrefData.TOKEN);
       if (isLoggedIn) {
-        // Tools.changeScreen(context, OnBoardingScreen());
         Tools.changeScreen(context, DashboardScreen());
       } else {
-        Tools.changeScreen(context, OnBoardingScreen());
+        try {
+          var isSkipIntro = prefs.getBool("skipIntro");
+          if(isSkipIntro){
+            Tools.changeScreen(context, LoginScreen());
+          }else{
+            Tools.changeScreen(context, OnBoardingScreen());
+          }
+        }catch (e){
+          Tools.changeScreen(context, OnBoardingScreen());
+        }
       }
     }
 

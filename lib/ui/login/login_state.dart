@@ -22,3 +22,15 @@ class LoginError extends LoginState {
   @override
   List<Object> get props => [message];
 }
+
+class InitialState extends LoginState {
+  InitialState();
+  @override
+  List<Object> get props => null;
+}
+
+class LoadingState extends LoginState {
+  LoadingState();
+  @override
+  List<Object> get props => null;
+}

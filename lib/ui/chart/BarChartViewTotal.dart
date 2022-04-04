@@ -111,7 +111,7 @@ class BarChartTotalState extends State<BarChartTotal> {
                         getTextStyles: (value) => const TextStyle(
                             color: MyColors.grey_60, fontWeight: FontWeight.normal, fontSize: 10),
                         margin: 10,
-                        interval: 1000,
+                        interval: 4000,
                         reservedSize: 50,
                         getTitles: (value) {
                           return value.toInt().toString() + " kWh";
