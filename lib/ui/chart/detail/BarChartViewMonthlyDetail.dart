@@ -65,7 +65,12 @@ class BarChartMonthlyDetailState extends State<BarChartMonthlyDetail> {
       DeviceOrientation.landscapeRight,
     ]);
     return Scaffold(
-      appBar: AppBar(backgroundColor: MyColors.white,),
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        backgroundColor: MyColors.white,),
       body: Row(
         children: [
           Expanded(

@@ -141,7 +141,7 @@ class _ChartViewState extends State<ChartView> {
           getTooltipItems: (value) {
             return value
                 .map((e) => LineTooltipItem(
-                "Energy: ${e.y}kW  \n Time: ${getTimeDetail(e.x)}",
+                "Power: ${e.y}kW  \n Time: ${getTimeDetail(e.x)}",
                 TextStyle(color: MyColors.grey_60)))
                 .toList();
           },

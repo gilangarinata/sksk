@@ -31,6 +31,12 @@ class ProfileLoaded extends ProfileState {
   List<Object> get props => [items];
 }
 
+class ChangePasswordSuccess extends ProfileState {
+  ChangePasswordSuccess();
+  @override
+  List<Object> get props => [];
+}
+
 class ServiceError extends ProfileState {
   final String message;
   ServiceError({@required this.message});

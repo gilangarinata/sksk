@@ -25,7 +25,12 @@ class _DetailChartViewState extends State<DetailChartView> {
       DeviceOrientation.landscapeRight,
     ]);
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+      ),
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         child: Container(

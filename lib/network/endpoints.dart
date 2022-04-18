@@ -19,4 +19,5 @@ class Endpoints {
     static const String VOUCHER_BANNERS = "/voucher-banners";
     static const String VOUCHER_CATEGORIES = "/voucher-categories";
     static const String PROFILE = "/profile";
+    static const String CHANGE_PASSWORD = "/change-password";
 }

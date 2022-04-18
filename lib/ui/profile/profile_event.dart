@@ -24,3 +24,14 @@ class SaveProfile extends ProfileEvent {
 
   SaveProfile(this.name, this.company);
 }
+
+class ChangePassword extends ProfileEvent {
+  String oldPassword;
+  String newPassword;
+  String newPassword2;
+
+  @override
+  List<Object> get props => null;
+
+  ChangePassword(this.oldPassword, this.newPassword, this.newPassword2);
+}

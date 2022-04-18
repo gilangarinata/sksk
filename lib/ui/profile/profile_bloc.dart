@@ -38,6 +38,18 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       } catch (e) {
         yield ServiceError(message: e.toString());
       }
+    } else if(event is ChangePassword){
+      yield LoadingState();
+      try {
+        bool items = await repository.changePassword(event.oldPassword, event.newPassword, event.newPassword2);
+        if(items){
+          yield ChangePasswordSuccess();
+        }else{
+          yield ServiceError(message: "Gagal Menyimpan");
+        }
+      } catch (e) {
+        yield ServiceError(message: e.toString());
+      }
     }
   }
 }

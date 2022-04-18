@@ -25,7 +25,7 @@ class KoinKitaBloc extends Bloc<KoinKitaEvent, KoinKitaState> {
         print("login sukses");
         yield LoadedState(items: items);
       } catch (e) {
-        print("login error");
+        print("get koin error");
         yield ErrorState(message: e.toString());
       }
     } else if (event is GetVouchers) {
@@ -35,7 +35,7 @@ class KoinKitaBloc extends Bloc<KoinKitaEvent, KoinKitaState> {
         print("get voucher success");
         yield VoucherLoadedState(items: items);
       } catch (e) {
-        print("login error");
+        print("get viucher error");
         yield ErrorState(message: e.toString());
       }
     } else if (event is GetVoucherBanner) {
@@ -45,7 +45,7 @@ class KoinKitaBloc extends Bloc<KoinKitaEvent, KoinKitaState> {
         print("login sukses");
         yield VoucherBannerLoadedState(items: items);
       } catch (e) {
-        print("login error");
+        print("get voucher banner error");
         yield ErrorState(message: e.toString());
       }
     } else if (event is GetVoucherCategories) {
@@ -55,7 +55,7 @@ class KoinKitaBloc extends Bloc<KoinKitaEvent, KoinKitaState> {
         print("login sukses");
         yield VoucherCategoriesLoadedState(items: items);
       } catch (e) {
-        print("login error");
+        print("get voucher category error");
         yield ErrorState(message: e.toString());
       }
     } else if (event is GetMyVouchers) {
@@ -65,7 +65,7 @@ class KoinKitaBloc extends Bloc<KoinKitaEvent, KoinKitaState> {
         print("get voucher success");
         yield MyVoucherLoadedState(items: items);
       } catch (e) {
-        print("login error");
+        print("get my voucher error");
         yield ErrorState(message: e.toString());
       }
     }else if (event is RedeemVoucher) {
@@ -74,7 +74,7 @@ class KoinKitaBloc extends Bloc<KoinKitaEvent, KoinKitaState> {
         ResponseRedeem items = await repository.postRedeem(event.id);
         yield RedemSuccess(items);
       } catch (e) {
-        print("login error");
+        print("redeem error");
         yield ErrorState(message: e.toString());
       }
     }else if (event is GetVouchersCategoriesDetail) {
@@ -83,7 +83,7 @@ class KoinKitaBloc extends Bloc<KoinKitaEvent, KoinKitaState> {
         VoucherResponse items = await repository.fetchVoucherCategoriesDetail(event.categoryId);
         yield MyVoucherCategoriesDetailLoadedState(items: items, title: event.title);
       } catch (e) {
-        print("login error");
+        print("get voucher cat detail error error");
         yield ErrorState(message: e.toString());
       }
     }

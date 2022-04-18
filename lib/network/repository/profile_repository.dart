@@ -18,6 +18,7 @@ import 'package:solar_kita/utils/tools.dart';
 abstract class ProfileRepository {
   Future<ProfileResponse> getProfile();
   Future<bool> saveProfile(String name, String company);
+  Future<bool> changePassword(String oldPassword, String newPassword, String newPassword2);
 }
 
 class ProfileRepositoryImpl implements ProfileRepository {
@@ -66,6 +67,37 @@ class ProfileRepositoryImpl implements ProfileRepository {
     var uri = Uri.https(
       Endpoints.BASE_URL_TEST,
       Endpoints.PROFILE,
+    );
+    try {
+      var response = await http.post(uri, headers: headers, body: body).timeout(
+          const Duration(seconds: 40));
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        Tools.stackTracer(
+            StackTrace.current, response.body, response.statusCode);
+        throw Exception("---error");
+      }
+    } on TimeoutException catch (_) {
+      throw Exception("Timeout");
+    } on SocketException catch (_) {
+      throw Exception("Socket exception");
+    }
+  }
+
+  @override
+  Future<bool> changePassword(String oldPassword, String newPassword, String newPassword2) async {
+    var headers = {
+      "Authorization": await _getToken()
+    };
+    var body = {
+      "current_password": oldPassword,
+      "new_password": newPassword,
+      "new_password_confirmation" : newPassword2
+    };
+    var uri = Uri.https(
+      Endpoints.BASE_URL_TEST,
+      Endpoints.CHANGE_PASSWORD,
     );
     try {
       var response = await http.post(uri, headers: headers, body: body).timeout(

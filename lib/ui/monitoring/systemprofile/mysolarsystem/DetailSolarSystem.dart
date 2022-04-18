@@ -159,16 +159,17 @@ class _DetailSolarSystemState extends State<DetailSolarSystemChild> {
       }
     });
 
-    if(index == 0){
-      fetchDailyChart(formatDate(DateTime.now(), "DAILY"));
-    }else if(indexSelected == 1){
-      fetchMonthlyChart(formatDate(DateTime.now(), "MONTHLY"));
-    }else if(indexSelected == 2){
-      fetchYearlyChart(formatDate(DateTime.now(), "YEARLY"));
-    }else if(indexSelected == 3){
-      fetchTotalChart();
-    }
+    // if(index == 0){
+    //   fetchDailyChart(formatDate(DateTime.now(), "DAILY"));
+    // }else if(indexSelected == 1){
+    //   fetchMonthlyChart(formatDate(DateTime.now(), "MONTHLY"));
+    // }else if(indexSelected == 2){
+    //   fetchYearlyChart(formatDate(DateTime.now(), "YEARLY"));
+    // }else if(indexSelected == 3){
+    //   fetchTotalChart();
+    // }
 
+    processDate();
   }
 
   String _currentSelectedYear;
@@ -211,9 +212,7 @@ class _DetailSolarSystemState extends State<DetailSolarSystemChild> {
       final file = await new File('${tempDir.path}/image.jpg').create();
       file.writeAsBytesSync(capturedBytes);
 
-      Share.shareFiles(['${tempDir.path}/image.jpg'], text: 'test picture');
-
-
+      Share.shareFiles(['${tempDir.path}/image.jpg'], text: '');
     } catch (e) {
       print('Share error: $e');
     }
@@ -229,15 +228,6 @@ class _DetailSolarSystemState extends State<DetailSolarSystemChild> {
           onPressed: () => Navigator.of(context).pop(),
         ),
         centerTitle: true,
-        actions: [
-          CircleAvatar(
-            backgroundColor: MyColors.accentDark,
-            child: Icon(Icons.person_outline),
-          ),
-          SizedBox(
-            width: 20,
-          )
-        ],
         title: MyText.myTextHeader2("Inverter : " + inverterId, MyColors.accentDark),
       ),
       body : BlocListener<SystemProfileBloc, SystemProfileState>(
