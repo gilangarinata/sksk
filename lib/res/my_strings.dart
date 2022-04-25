@@ -1,7 +1,7 @@
 class MyStrings {
   static const String welcome = "Welcome";
   static const String mustNotEmpty = "Must not be empty";
-  static const String emailUserName = "Email or username";
+  static const String emailUserName = "Email";
   static const String name = "Name";
   static const String oldPassword = "Old Password";
   static const String newPassword = "New Password";

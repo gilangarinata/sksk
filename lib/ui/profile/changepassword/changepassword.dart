@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:solar_kita/network/repository/profile_repository.dart';
 import 'package:solar_kita/res/my_button.dart';
 import 'package:solar_kita/res/my_colors.dart';
@@ -71,7 +72,15 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreenContent> {
               MySnackbar.showToast("Password was entered is incorrect");
             });
           }else if (state is ChangePasswordSuccess) {
-            Navigator.pop(context);
+            Fluttertoast.showToast(
+                msg: "Change password success",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.CENTER,
+                timeInSecForIosWeb: 1,
+                backgroundColor: MyColors.grey_40,
+                textColor: Colors.white,
+                fontSize: 16.0
+            ).then((value) => Navigator.pop(context));
           } else if (state is InitialState) {
             setState(() {
               isLoading = true;
