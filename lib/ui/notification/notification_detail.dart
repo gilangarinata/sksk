@@ -134,6 +134,12 @@ class _NotificationScreenState extends State<NotificationScreenContent> {
           }
         },
         child: Scaffold(
+          appBar: AppBar(
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back, color: Colors.black),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            backgroundColor: MyColors.white,),
           body: _isLoading ? ProgressLoading() : ListView(
           children: generateNotif(),
           ),
