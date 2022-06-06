@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:solar_kita/network/model/response/help_center_list_response.dart';
 import 'package:solar_kita/network/model/response/maintenance_list_response.dart';
 import 'package:solar_kita/network/repository/service_repository.dart';
+import 'package:solar_kita/prefmanager/pref_data.dart';
 import 'package:solar_kita/res/my_button.dart';
 import 'package:solar_kita/res/my_colors.dart';
 import 'package:solar_kita/res/my_text.dart';
@@ -335,7 +337,15 @@ class _ServicesScreenState extends State<ServicesScreenChild> {
             Container(
               padding: EdgeInsets.symmetric(horizontal: 100),
               child: Center(
-                child: postingLoading ? ProgressLoading() : MyButton.myPrimaryButton("Submit", (){
+                child: postingLoading ? ProgressLoading() : MyButton.myPrimaryButton("Submit", () async{
+                  SharedPreferences prefs = await SharedPreferences.getInstance();
+                  bool isDemo = prefs.getBool(PrefData.IS_DEMO);
+                  
+                  if(isDemo){
+                    MySnackbar.showToast("Not Available. You are using demo account.");
+                    return;
+                  }
+                  
                   setState(() {
                     postingLoading = true;
                   });

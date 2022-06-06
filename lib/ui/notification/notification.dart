@@ -98,7 +98,14 @@ class _NotificationScreenState extends State<NotificationScreenContent> {
               SizedBox(height: 20,),
               Divider(),
               InkWell(
-                  onTap: (){
+                  onTap: () async{
+                    SharedPreferences prefs = await SharedPreferences.getInstance();
+                    bool isDemo = prefs.getBool(PrefData.IS_DEMO);
+
+                    if(isDemo){
+                      MySnackbar.showToast("Not Available. You are using demo account.");
+                      return;
+                    }
                     widget.itemClick(0);
                   },
                   child: Center(child: MyText.myTextHeader2("Find out more", MyColors.accentDark)))

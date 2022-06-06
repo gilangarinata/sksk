@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:solar_kita/network/model/response/profile_response.dart';
 import 'package:solar_kita/network/repository/profile_repository.dart';
+import 'package:solar_kita/prefmanager/pref_data.dart';
 import 'package:solar_kita/res/my_colors.dart';
 import 'package:solar_kita/res/my_strings.dart';
 import 'package:solar_kita/res/my_text.dart';
@@ -155,7 +156,14 @@ class _ProfileScreenState extends State<ProfileScreenContent> {
                     children: [
                       Divider(),
                       InkWell(
-                        onTap: (){
+                        onTap: () async{
+                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                          bool isDemo = prefs.getBool(PrefData.IS_DEMO);
+
+                          if(isDemo){
+                            MySnackbar.showToast("Not Available. You are using demo account.");
+                            return;
+                          }
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -173,7 +181,14 @@ class _ProfileScreenState extends State<ProfileScreenContent> {
                       ),
                       Divider(),
                       InkWell(
-                        onTap: (){
+                        onTap: () async {
+                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                          bool isDemo = prefs.getBool(PrefData.IS_DEMO);
+
+                          if(isDemo){
+                            MySnackbar.showToast("Not Available. You are using demo account.");
+                            return;
+                          }
                           Tools.addScreen(context, ChangePasswordScreen());
                         },
                         child: Padding(
@@ -224,7 +239,9 @@ class _ProfileScreenState extends State<ProfileScreenContent> {
                       ),
                       Divider(thickness: 5,color: MyColors.grey_5,),
                       InkWell(
-                        onTap: (){
+                        onTap: () async{
+                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                          prefs.clear();
                           Tools.changeScreen(context, LoginScreen());
                         },
                         child: Padding(

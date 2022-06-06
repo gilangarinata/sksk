@@ -17,7 +17,7 @@ import 'package:solar_kita/utils/tools.dart';
 
 abstract class SystemProfileRepository {
   Future<SystemProfileResponse> getSystemProfile();
-  Future<SystemProfileResponse> getSystemProfileDetail(String id);
+  Future<SystemProfileResponse> getSystemProfileDetail(String id, String month, String year);
 }
 
 class SystemProfileRepositoryImpl implements SystemProfileRepository {
@@ -48,9 +48,15 @@ class SystemProfileRepositoryImpl implements SystemProfileRepository {
       "Authorization" : token
     };
 
+    var query = {
+      "month" : DateTime.now().year.toString() + "-"+ Tools.addPadleft(DateTime.now().month.toString()),
+      "year" : DateTime.now().year.toString()
+    };
+
     var uri = Uri.https(
       Endpoints.BASE_URL_TEST,
       Endpoints.SYSTEM_PROFILE,
+      query
     );
 
     var response = await http.get(uri, headers: headers);
@@ -79,15 +85,21 @@ class SystemProfileRepositoryImpl implements SystemProfileRepository {
   }
 
   @override
-  Future<SystemProfileResponse> getSystemProfileDetail(String id) async {
+  Future<SystemProfileResponse> getSystemProfileDetail(String id, String month, String year) async {
     var token = await _getToken();
     var headers = {
       "Authorization" : token
     };
 
+    var query = {
+      "month" : month,
+      "year" : year
+    };
+
     var uri = Uri.https(
       Endpoints.BASE_URL_TEST,
       Endpoints.SYSTEM_PROFILE_DETAIL + id,
+      query
     );
 
     var response = await http.get(uri, headers: headers);

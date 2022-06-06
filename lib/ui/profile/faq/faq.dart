@@ -26,7 +26,10 @@ class _FaqScreenState extends State<FaqScreen> {
         backgroundColor: MyColors.white,
         elevation: 0,
         centerTitle: true,
-
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
         title: MyText.myTextHeader2(MyStrings.faq, MyColors.accentDark),
       ),
       body: Container(

@@ -24,7 +24,7 @@ class SystemProfileBloc extends Bloc<SystemProfileEvent, SystemProfileState> {
       }
     }else if(event is FetchSystemProfileDetail){
       try {
-        SystemProfileResponse items = await repository.getSystemProfileDetail(event.id);
+        SystemProfileResponse items = await repository.getSystemProfileDetail(event.id,event.month, event.year);
         yield SystemProfileDetailLoaded(items: items);
       } catch (e) {
         yield SystemProfileError(message: e.toString());

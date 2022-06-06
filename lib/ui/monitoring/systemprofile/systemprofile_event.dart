@@ -15,9 +15,11 @@ class FetchSystemProfile extends SystemProfileEvent {
 
 class FetchSystemProfileDetail extends SystemProfileEvent {
   String id;
+  String month;
+  String year;
   @override
   List<Object> get props => null;
-  FetchSystemProfileDetail(this.id);
+  FetchSystemProfileDetail(this.id,this.month,this.year);
 }
 
 

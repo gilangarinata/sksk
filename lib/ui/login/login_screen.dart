@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:solar_kita/network/repository/login_repository.dart';
+import 'package:solar_kita/prefmanager/pref_data.dart';
 import 'package:solar_kita/res/my_button.dart';
 import 'package:solar_kita/res/my_colors.dart';
 import 'package:solar_kita/res/my_field_style.dart';
@@ -15,6 +17,7 @@ import 'package:solar_kita/utils/tools.dart';
 import 'package:solar_kita/utils/validator.dart';
 import 'package:solar_kita/widget/my_snackbar.dart';
 import 'package:solar_kita/widget/progress_loading.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key key}) : super(key: key);
@@ -140,8 +143,11 @@ class _LoginScreenChildState extends State<LoginScreenChild> {
                       children: [
                         _isLoading ? ProgressLoading() : MyButton.myPrimaryButton(
                           MyStrings.login,
-                              () {
-                            setState(() {
+                              () async {
+                                SharedPreferences prefs = await SharedPreferences.getInstance();
+                                prefs.setBool(PrefData.IS_DEMO, false);
+
+                                setState(() {
                               _isLoading = true;
                               var username = _usernameController.text.toString();
                               var password = _passwordController.text.toString();
@@ -158,6 +164,56 @@ class _LoginScreenChildState extends State<LoginScreenChild> {
                       ],
                     ),
                     SizedBox(height: 20,),
+                    Container(
+                      width: double.infinity,
+                      child: RaisedButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                            side: BorderSide(color: MyColors.primary)),
+                        onPressed: () async{
+                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                          prefs.setBool(PrefData.IS_DEMO, true);
+
+                          _isLoading = true;
+                          var username = "solarkitateknologi@gmail.com";
+                          var password = "Solarkita19";
+                          loginBloc.add(ProcessLogin(username, password));
+                        },
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        color: MyColors.primary,
+                        textColor: MyColors.grey_60,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("Not a SolarKita member yet?", style: TextStyle(fontSize: 14)),
+                            Text(" Try our demo", style: TextStyle(fontSize: 14, color: MyColors.grey_80, fontWeight: FontWeight.bold)),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 50,),
+                    Center(
+                      child: InkWell(
+                          onTap: () async{
+                            const url = "https://solarkita.com/contact";
+                            await launch(url);
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              MyText.myTextDescription("Need more info?", MyColors.grey_60),
+                              RichText(
+                                maxLines: 5,
+                                textAlign: TextAlign.center,
+                                overflow: TextOverflow.ellipsis,
+                                text: TextSpan(
+                                  style: TextStyle(color: MyColors.grey_60, fontSize: 16.0, fontWeight: FontWeight.bold),
+                                  text: " Contact Us.",
+                                ),
+                              )
+                            ],
+                          )),
+                    )
                   ],
                 ),
               )

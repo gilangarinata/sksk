@@ -251,7 +251,16 @@ class _DetailVoucherScreenState extends State<DetailVoucherScreenContent> {
         ),
       ),
       bottomNavigationBar: InkWell(
-        onTap: () {
+        onTap: () async{
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          bool isDemo = prefs.getBool(PrefData.IS_DEMO);
+
+          if(isDemo){
+            MySnackbar.showToast("Not Available. You are using demo account.");
+            return;
+          }
+
+
           if (widget.isRedeem) {
             if (widget.data != null) {
               bloc.add(RedeemVoucher(widget.data.id.toString()));

@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share/share.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:solar_kita/network/model/response/graph_day_response.dart';
 import 'package:solar_kita/network/model/response/graph_month_response.dart';
 import 'package:solar_kita/network/model/response/graph_total_response.dart';
@@ -15,6 +16,7 @@ import 'package:solar_kita/network/model/response/graph_year_response.dart';
 import 'package:solar_kita/network/model/response/system_profile_response.dart';
 import 'package:solar_kita/network/repository/graph_repository.dart';
 import 'package:solar_kita/network/repository/system_profile_repository.dart';
+import 'package:solar_kita/prefmanager/pref_data.dart';
 import 'package:solar_kita/res/my_button.dart';
 import 'package:solar_kita/res/my_colors.dart';
 import 'package:solar_kita/res/my_strings.dart';
@@ -97,7 +99,9 @@ class _DetailSolarSystemState extends State<DetailSolarSystemChild> {
     // fetchMonthlyChart(formatDate(DateTime.now(), "MONTHLY"));
     // fetchYearlyChart(formatDate(DateTime.now(), "YEARLY"));
     // fetchTotalChart();
-    systemProfileBloc.add(FetchSystemProfileDetail(inverterId));
+    var m = Tools.addPadleft(now.month.toString());
+    var y = now.year.toString();
+    systemProfileBloc.add(FetchSystemProfileDetail(inverterId,"$y-$m",y));
 
     Future.delayed(const Duration(milliseconds: 1000), () {
       setState(() {
@@ -188,11 +192,18 @@ class _DetailSolarSystemState extends State<DetailSolarSystemChild> {
       var month = Tools.addPadleft(Tools.monthToNumber(_currentSelectedMonth).toString());
       var year = _currentSelectedYear;
       if(tabChartSelected[0] == true){
-        fetchDailyChart(year + "-" + month + "-" + day);
+        var date = year + "-" + month + "-" + day;
+        fetchDailyChart(date);
+        var monthQuery = year + "-" + month;
+        systemProfileBloc.add(FetchSystemProfileDetail(inverterId,monthQuery, year));
       }else if(tabChartSelected[1] == true){
-        fetchMonthlyChart(year + "-" + month);
+        var monthQuery = year + "-" + month;
+        fetchMonthlyChart(monthQuery);
+        systemProfileBloc.add(FetchSystemProfileDetail(inverterId,monthQuery, year));
       }else if(tabChartSelected[2] == true){
         fetchYearlyChart(year);
+        var monthQuery = year + "-" + month;
+        systemProfileBloc.add(FetchSystemProfileDetail(inverterId,monthQuery, year));
       }else if(tabChartSelected[3] == true){
         fetchTotalChart();
       }
@@ -200,6 +211,14 @@ class _DetailSolarSystemState extends State<DetailSolarSystemChild> {
   }
 
   Future<void> _capturePng() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool isDemo = prefs.getBool(PrefData.IS_DEMO);
+
+    if(isDemo){
+      MySnackbar.showToast("Not Available. You are using demo account.");
+      return;
+    }
+
     RenderRepaintBoundary boundary =
     globalKey.currentContext.findRenderObject();
     ui.Image image = await boundary.toImage();
@@ -463,7 +482,14 @@ class _DetailSolarSystemState extends State<DetailSolarSystemChild> {
                   MyButton.myBorderButton(
                     MyStrings.share,
                     10,
-                        () {
+                        () async{
+                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                          bool isDemo = prefs.getBool(PrefData.IS_DEMO);
+
+                          if(isDemo){
+                            MySnackbar.showToast("Not Available. You are using demo account.");
+                            return;
+                          }
                       _capturePng();
                     },
                   ),
