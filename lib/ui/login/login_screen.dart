@@ -166,10 +166,10 @@ class _LoginScreenChildState extends State<LoginScreenChild> {
                     SizedBox(height: 20,),
                     Container(
                       width: double.infinity,
-                      child: RaisedButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0),
-                            side: BorderSide(color: MyColors.primary)),
+                      child: ElevatedButton(
+                        // shape: RoundedRectangleBorder(
+                        //     borderRadius: BorderRadius.circular(20.0),
+                        //     side: BorderSide(color: MyColors.primary)),
                         onPressed: () async{
                           SharedPreferences prefs = await SharedPreferences.getInstance();
                           prefs.setBool(PrefData.IS_DEMO, true);
@@ -179,9 +179,12 @@ class _LoginScreenChildState extends State<LoginScreenChild> {
                           var password = "Solarkita19";
                           loginBloc.add(ProcessLogin(username, password));
                         },
-                        padding: EdgeInsets.symmetric(vertical: 10),
-                        color: MyColors.primary,
-                        textColor: MyColors.grey_60,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: MyColors.primary
+                        ),
+                        // padding: EdgeInsets.symmetric(vertical: 10),
+                        // color: MyColors.primary,
+                        // textColor: MyColors.grey_60,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [

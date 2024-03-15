@@ -121,7 +121,7 @@ class BarChartMonthlyDetailState extends State<BarChartMonthlyDetail> {
                             show: true,
                             bottomTitles: SideTitles(
                               showTitles: true,
-                              getTextStyles: (value) => const TextStyle(
+                              getTextStyles: (value,as) => const TextStyle(
                                   color: MyColors.grey_80, fontWeight: FontWeight.normal, fontSize: 10),
                               margin: 20,
                               getTitles: (double value) {
@@ -135,7 +135,7 @@ class BarChartMonthlyDetailState extends State<BarChartMonthlyDetail> {
                             ),
                             leftTitles: SideTitles(
                               showTitles: true,
-                              getTextStyles: (value) => const TextStyle(
+                              getTextStyles: (value,as) => const TextStyle(
                                   color: MyColors.grey_60, fontWeight: FontWeight.normal, fontSize: 10),
                               margin: 20,
                               interval: 8,

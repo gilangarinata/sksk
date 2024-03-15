@@ -47,7 +47,7 @@ class GraphRepositoryImpl implements GraphRepository {
       if (response.body != null) {
         try {
           List<GraphDayResponse> results = graphDayParentResponseFromJson(response.body).data;
-          Tools.stackTracer(StackTrace.current, "Sukses", response.statusCode);
+          Tools.stackTracer(StackTrace.current, "SuksesG daily ${results.length}", response.statusCode);
           return results;
         } catch (e) {
           Tools.stackTracer(StackTrace.current, e.toString(), 500);
@@ -82,7 +82,7 @@ class GraphRepositoryImpl implements GraphRepository {
       if (response.body != null) {
         try {
           List<GraphMonthResponse> results = graphMonthParentResponseFromJson(response.body).data;
-          Tools.stackTracer(StackTrace.current, "Sukses", response.statusCode);
+          Tools.stackTracer(StackTrace.current, "SuksesG monthly ${results.length}", response.statusCode);
           return results;
         } catch (e) {
           Tools.stackTracer(StackTrace.current, e.toString(), 500);
@@ -116,7 +116,7 @@ class GraphRepositoryImpl implements GraphRepository {
       if (response.body != null) {
         try {
           List<GraphTotalResponse> results = graphTotalParentResponseFromJson(response.body).data;
-          Tools.stackTracer(StackTrace.current, "Sukses", response.statusCode);
+          Tools.stackTracer(StackTrace.current, "SuksesG total ${results.length}", response.statusCode);
           return results;
         } catch (e) {
           Tools.stackTracer(StackTrace.current, e.toString(), 500);
@@ -151,7 +151,7 @@ class GraphRepositoryImpl implements GraphRepository {
       if (response.body != null) {
         try {
           List<GraphYearResponse> results = graphYearParentResponseFromJson(response.body).data;
-          Tools.stackTracer(StackTrace.current, "Sukses", response.statusCode);
+          Tools.stackTracer(StackTrace.current, "SuksesG yearly ${results.length}", response.statusCode);
           return results;
         } catch (e) {
           Tools.stackTracer(StackTrace.current, e.toString(), 500);

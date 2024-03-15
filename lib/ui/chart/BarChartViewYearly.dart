@@ -107,7 +107,7 @@ class BarChartYearlyState extends State<BarChartYearly> {
                       bottomTitles: SideTitles(
                         showTitles: true,
                         rotateAngle: 60,
-                        getTextStyles: (value) => const TextStyle(
+                        getTextStyles: (value,as) => const TextStyle(
                             color: MyColors.grey_80, fontWeight: FontWeight.normal, fontSize: 10),
                         margin: 20,
                         getTitles: (double value) {
@@ -117,7 +117,7 @@ class BarChartYearlyState extends State<BarChartYearly> {
                       ),
                       leftTitles: SideTitles(
                         showTitles: true,
-                        getTextStyles: (value) => const TextStyle(
+                        getTextStyles: (value,as) => const TextStyle(
                             color: MyColors.grey_60, fontWeight: FontWeight.normal, fontSize: 10),
                         margin: 10,
                         interval: 1000,

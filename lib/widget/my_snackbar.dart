@@ -5,7 +5,7 @@ import 'package:solar_kita/utils/tools.dart';
 
 class MySnackbar {
   static void errorSnackbar(BuildContext context, String message) {
-    Scaffold.of(context).showSnackBar(
+    ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
           message.replaceAll("Exception:", ""),
@@ -18,7 +18,7 @@ class MySnackbar {
   }
 
   static void successSnackbarDismisable(BuildContext context, String message) {
-    Scaffold.of(context)
+    ScaffoldMessenger.of(context)
         .showSnackBar(
           SnackBar(
             content: Text(
@@ -36,7 +36,7 @@ class MySnackbar {
   }
 
   static void successSnackbar(BuildContext context, String message) {
-    Scaffold.of(context)
+    ScaffoldMessenger.of(context)
         .showSnackBar(
       SnackBar(
         content: Text(
@@ -53,7 +53,7 @@ class MySnackbar {
   }
 
   static void warningSnackbar(BuildContext context, String message) {
-    Scaffold.of(context).showSnackBar(
+    ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
           message,

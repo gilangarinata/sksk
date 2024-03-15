@@ -104,7 +104,7 @@ class _DetailChartViewState extends State<DetailChartView> {
         bottomTitles: SideTitles(
           showTitles: true,
           reservedSize: 22,
-          getTextStyles: (value) => const TextStyle(
+          getTextStyles: (value,as) => const TextStyle(
             color: MyColors.grey_60,
             fontWeight: FontWeight.normal,
             fontSize: 10,
@@ -132,7 +132,7 @@ class _DetailChartViewState extends State<DetailChartView> {
         ),
         leftTitles: SideTitles(
           showTitles: true,
-          getTextStyles: (value) => const TextStyle(
+          getTextStyles: (value,as) => const TextStyle(
               color: MyColors.grey_60, fontWeight: FontWeight.normal, fontSize: 10),
           getTitles: (value) {
             return value.toInt().toString() + " kWh";

@@ -2,7 +2,7 @@ name: solar_kita
 description: A new Flutter application.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.13+14
+version: 2.0.1+21
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -24,7 +24,7 @@ dependencies:
   flutter_datetime_picker: ^1.5.1
   flutter_html: ^0.8.2
   dio: ^4.0.4
-  open_file: ^3.2.1
+#  open_file: ^3.2.1
   url_launcher: ^5.7.10
   firebase_core: ^0.7.0
   firebase_messaging: ^8.0.0-dev.15

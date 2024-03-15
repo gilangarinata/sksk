@@ -4,7 +4,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:open_file/open_file.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:solar_kita/network/model/response/voucher_response.dart';
 import 'package:solar_kita/network/repository/koinkita_repository.dart';
@@ -73,7 +72,7 @@ class _DetailVoucherScreenState extends State<DetailVoucherScreenContent> {
 
   Future<void> openFile(String filename) async {
     print(filename);
-    await OpenFile.open(filename);
+    // await OpenFile.open(filename);
   }
 
   Future downloadFile(String url, String fileName) async {

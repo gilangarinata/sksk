@@ -26,6 +26,7 @@ class _ChartViewState extends State<ChartView> {
   @override
   void initState() {
     super.initState();
+    print("Gilangchart : ${items.length}");
     isShowingMainData = true;
   }
 
@@ -158,7 +159,7 @@ class _ChartViewState extends State<ChartView> {
           showTitles: true,
           rotateAngle: 40,
           reservedSize: 22,
-          getTextStyles: (value) => const TextStyle(
+          getTextStyles: (value,as) => const TextStyle(
             color: MyColors.grey_60,
             fontWeight: FontWeight.normal,
             fontSize: 10,
@@ -170,7 +171,7 @@ class _ChartViewState extends State<ChartView> {
         ),
         leftTitles: SideTitles(
           showTitles: true,
-          getTextStyles: (value) => const TextStyle(
+          getTextStyles: (value,as) => const TextStyle(
               color: MyColors.grey_60, fontWeight: FontWeight.normal, fontSize: 10),
           getTitles: (value) {
             return value.toInt().toString() + " kW";

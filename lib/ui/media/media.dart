@@ -35,7 +35,7 @@ class _MediaScreenState extends State<MediaScreen> {
               isLoading = false;
             });
           },
-          initialUrl: 'https://media.solarkita.com/',
+          initialUrl: 'https://www.solarkita.com/blog',
         ),
         Align(
           alignment: Alignment.center,
