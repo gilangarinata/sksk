@@ -11,7 +11,7 @@ class ContactUsScreen extends StatefulWidget {
 }
 
 class _ContactUsScreenState extends State<ContactUsScreen> {
-  Size size;
+  late Size size;
   bool isLoading = true;
 
   @override

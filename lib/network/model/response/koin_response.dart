@@ -14,8 +14,8 @@ class KoinResponse {
     this.data,
   });
 
-  int status;
-  Data data;
+  int? status;
+  Data? data;
 
   factory KoinResponse.fromJson(Map<String, dynamic> json) => KoinResponse(
     status: json["status"],
@@ -24,7 +24,7 @@ class KoinResponse {
 
   Map<String, dynamic> toJson() => {
     "status": status,
-    "data": data.toJson(),
+    "data": data?.toJson(),
   };
 }
 
@@ -33,7 +33,7 @@ class Data {
     this.availableKoin,
   });
 
-  String availableKoin;
+  String? availableKoin;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
     availableKoin: json["available_koin"] ,

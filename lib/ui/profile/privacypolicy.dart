@@ -10,7 +10,7 @@ class PrivacyPolicyScreen extends StatefulWidget {
 }
 
 class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
-  Size size;
+  late Size size;
   bool isLoading = true;
 
   @override

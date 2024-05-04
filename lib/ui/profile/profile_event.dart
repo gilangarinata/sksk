@@ -9,20 +9,26 @@ abstract class ProfileEvent extends Equatable {}
 
 class FetchProfile extends ProfileEvent {
 
-  @override
-  List<Object> get props => null;
+
 
   FetchProfile();
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
 }
 
 class SaveProfile extends ProfileEvent {
   String name;
   String company;
 
-  @override
-  List<Object> get props => null;
+
 
   SaveProfile(this.name, this.company);
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
 }
 
 class ChangePassword extends ProfileEvent {
@@ -30,8 +36,11 @@ class ChangePassword extends ProfileEvent {
   String newPassword;
   String newPassword2;
 
-  @override
-  List<Object> get props => null;
+
 
   ChangePassword(this.oldPassword, this.newPassword, this.newPassword2);
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
 }

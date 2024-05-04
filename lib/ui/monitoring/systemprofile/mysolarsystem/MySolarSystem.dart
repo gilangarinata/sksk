@@ -16,7 +16,7 @@ class MySolarSystemView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    for(int i = 0; i < response.data.solarSystems.length; i++){
+    for(int i = 0; i < (response.data?.solarSystems?.length ?? 0); i++){
       listSystemProfile.add(buildCardSystemProfile(i, context));
     }
 
@@ -47,10 +47,10 @@ class MySolarSystemView extends StatelessWidget {
   }
 
   Widget buildCardSystemProfile(int index, BuildContext context){
-    var item = response != null ? response.data.solarSystems[index] : null;
+    var item = response != null ? response.data!.solarSystems![index] : null;
     return item == null ? Container() : InkWell(
       onTap: (){
-        Tools.addScreen(context, DetailSolarSystem(item.invId));
+        Tools.addScreen(context, DetailSolarSystem(item.invId ?? ""));
       },
       child: Card(
         shape: RoundedRectangleBorder(
@@ -67,7 +67,7 @@ class MySolarSystemView extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    MyText.myTextHeader3(item.invId, MyColors.accentDark),
+                    MyText.myTextHeader3(item.invId ?? "", MyColors.accentDark),
                   ],
                 ),
               )),
@@ -76,7 +76,7 @@ class MySolarSystemView extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    MyText.myTextDescription(item.pvSysPower, MyColors.grey_80),
+                    MyText.myTextDescription(item.pvSysPower ?? "", MyColors.grey_80),
                   ],
                 ),
               )),
@@ -85,7 +85,7 @@ class MySolarSystemView extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    MyText.myTextDescription2(item.location, MyColors.grey_80),
+                    MyText.myTextDescription2(item.location ?? "", MyColors.grey_80),
                   ],
                 ),
               )),

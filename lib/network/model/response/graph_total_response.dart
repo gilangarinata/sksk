@@ -14,8 +14,8 @@ class GraphTotalParentResponse {
     this.data,
   });
 
-  int status;
-  List<GraphTotalResponse> data;
+  int? status;
+  List<GraphTotalResponse>? data;
 
   factory GraphTotalParentResponse.fromJson(Map<String, dynamic> json) => GraphTotalParentResponse(
     status: json["status"],
@@ -24,7 +24,7 @@ class GraphTotalParentResponse {
 
   Map<String, dynamic> toJson() => {
     "status": status,
-    "data": List<dynamic>.from(data.map((x) => x.toJson())),
+    "data": List<dynamic>.from(data!.map((x) => x.toJson())),
   };
 }
 class GraphTotalResponse {
@@ -34,9 +34,9 @@ class GraphTotalResponse {
     this.yearI,
   });
 
-  String serial;
+  String? serial;
   dynamic total;
-  String yearI;
+  String? yearI;
 
   factory GraphTotalResponse.fromJson(Map<String, dynamic> json) => GraphTotalResponse(
     serial: json["Serial"],

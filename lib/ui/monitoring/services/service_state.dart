@@ -19,35 +19,35 @@ class LoadingState extends ServiceState {
 
 class ServiceLoaded extends ServiceState {
   final bool items;
-  ServiceLoaded({@required this.items});
+  ServiceLoaded({required this.items});
   @override
   List<Object> get props => [items];
 }
 
 class ServiceError extends ServiceState {
   final String message;
-  ServiceError({@required this.message});
+  ServiceError({required this.message});
   @override
   List<Object> get props => [message];
 }
 
 class MaintenanceListLoaded extends ServiceState {
   final MaintenanceListResponse items;
-  MaintenanceListLoaded({@required this.items});
+  MaintenanceListLoaded({required this.items});
   @override
   List<Object> get props => [items];
 }
 
 class HelpCenterListLoaded extends ServiceState {
   final HelpCenterListResponse items;
-  HelpCenterListLoaded({@required this.items});
+  HelpCenterListLoaded({required this.items});
   @override
   List<Object> get props => [items];
 }
 
 class NotificationListLoaded extends ServiceState {
   final NotificationResponse items;
-  NotificationListLoaded({@required this.items});
+  NotificationListLoaded({required this.items});
   @override
   List<Object> get props => [items];
 }

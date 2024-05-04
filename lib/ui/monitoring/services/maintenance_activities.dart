@@ -7,16 +7,16 @@ import 'package:solar_kita/res/my_text.dart';
 
 class MaintenanceActivities extends StatelessWidget {
 
-  MaintenanceListResponse _maintenanceListResponse;
+  MaintenanceListResponse? _maintenanceListResponse;
 
 
   MaintenanceActivities(this._maintenanceListResponse);
 
 
   Widget getList(Datum data, int number){
-    var formattedDate = DateFormat("dd-MM-yyyy HH:mm").format(data.createdAt);
+    var formattedDate = DateFormat("dd-MM-yyyy HH:mm").format(data.createdAt ?? DateTime.now());
     if(data.date != null && data.time != null){
-      var date = DateFormat("dd-MM-yyyy").format(data.date);
+      var date = DateFormat("dd-MM-yyyy").format(data.date ?? DateTime.now());
       var time = data.time;
       formattedDate = "$date $time";
     }
@@ -38,8 +38,8 @@ class MaintenanceActivities extends StatelessWidget {
   List<Widget> getDatas(){
     List<Widget> list = [];
     if(_maintenanceListResponse != null) {
-      for (int i = 0; i < _maintenanceListResponse.data.length; i++) {
-        list.add(getList(_maintenanceListResponse.data[i], i + 1));
+      for (int i = 0; i < (_maintenanceListResponse?.data?.length ?? 0); i++) {
+        list.add(getList(_maintenanceListResponse!.data![i], i + 1));
       }
     }
     return list;

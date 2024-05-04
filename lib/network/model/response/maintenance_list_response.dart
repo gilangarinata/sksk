@@ -14,8 +14,8 @@ class MaintenanceListResponse {
     this.data,
   });
 
-  int status;
-  List<Datum> data;
+  int? status;
+  List<Datum>? data;
 
   factory MaintenanceListResponse.fromJson(Map<String, dynamic> json) => MaintenanceListResponse(
     status: json["status"],
@@ -24,7 +24,7 @@ class MaintenanceListResponse {
 
   Map<String, dynamic> toJson() => {
     "status": status,
-    "data": List<dynamic>.from(data.map((x) => x.toJson())),
+    "data": List<dynamic>.from(data!.map((x) => x.toJson())),
   };
 }
 
@@ -44,18 +44,18 @@ class Datum {
     this.updatedAt
   });
 
-  int id;
-  int userId;
-  String nama;
-  String email;
-  String phone;
-  String address;
-  DateTime date;
-  String time;
-  String message;
-  int status;
-  DateTime createdAt;
-  DateTime updatedAt;
+  int? id;
+  int? userId;
+  String? nama;
+  String? email;
+  String? phone;
+  String? address;
+  DateTime? date;
+  String? time;
+  String? message;
+  int? status;
+  DateTime? createdAt;
+  DateTime? updatedAt;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
     id: json["id"],
@@ -79,11 +79,11 @@ class Datum {
     "email": email,
     "phone": phone,
     "address": address,
-    "date": date.toIso8601String(),
+    "date": date?.toIso8601String(),
     "time": time,
     "message": message,
     "status": status,
-    "created_at": createdAt.toIso8601String(),
-    "updated_at": updatedAt.toIso8601String(),
+    "created_at": createdAt?.toIso8601String(),
+    "updated_at": updatedAt?.toIso8601String(),
   };
 }

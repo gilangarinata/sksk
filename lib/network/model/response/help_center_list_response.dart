@@ -14,8 +14,8 @@ class HelpCenterListResponse {
     this.data,
   });
 
-  int status;
-  List<Datum> data;
+  int? status;
+  List<Datum>? data;
 
   factory HelpCenterListResponse.fromJson(Map<String, dynamic> json) => HelpCenterListResponse(
     status: json["status"],
@@ -24,7 +24,7 @@ class HelpCenterListResponse {
 
   Map<String, dynamic> toJson() => {
     "status": status,
-    "data": List<dynamic>.from(data.map((x) => x.toJson())),
+    "data": List<dynamic>.from(data!.map((x) => x.toJson())),
   };
 }
 
@@ -45,28 +45,28 @@ class Datum {
     this.time
   });
 
-  int id;
-  int complaintTypeId;
-  int userId;
-  Name name;
-  Email email;
-  String phone;
-  Address address;
-  String message;
-  int status;
-  DateTime createdAt;
-  DateTime updatedAt;
-  String date;
-  String time;
+  int? id;
+  int? complaintTypeId;
+  int? userId;
+  Name? name;
+  Email? email;
+  String? phone;
+  Address? address;
+  String? message;
+  int? status;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  String? date;
+  String? time;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
     id: json["id"],
     complaintTypeId: json["complaint_type_id"],
     userId: json["user_id"],
-    name: nameValues.map[json["name"]],
-    email: emailValues.map[json["email"]],
+    name: nameValues.map?[json["name"]],
+    email: emailValues.map?[json["email"]],
     phone: json["phone"],
-    address: addressValues.map[json["address"]],
+    address: addressValues.map?[json["address"]],
     message: json["message"],
     status: json["status"],
     createdAt: DateTime.parse(json["created_at"]).toLocal(),
@@ -79,14 +79,14 @@ class Datum {
     "id": id,
     "complaint_type_id": complaintTypeId,
     "user_id": userId,
-    "name": nameValues.reverse[name],
-    "email": emailValues.reverse[email],
+    "name": nameValues.reverse?[name],
+    "email": emailValues.reverse?[email],
     "phone": phone,
-    "address": addressValues.reverse[address],
+    "address": addressValues.reverse?[address],
     "message": message,
     "status": status,
-    "created_at": createdAt.toIso8601String(),
-    "updated_at": updatedAt.toIso8601String(),
+    "created_at": createdAt?.toIso8601String(),
+    "updated_at": updatedAt?.toIso8601String(),
   };
 }
 
@@ -109,14 +109,14 @@ final nameValues = EnumValues({
 });
 
 class EnumValues<T> {
-  Map<String, T> map;
-  Map<T, String> reverseMap;
+  Map<String, T>? map;
+  Map<T, String>? reverseMap;
 
   EnumValues(this.map);
 
-  Map<T, String> get reverse {
+  Map<T, String>? get reverse {
     if (reverseMap == null) {
-      reverseMap = map.map((k, v) => new MapEntry(v, k));
+      reverseMap = map?.map((k, v) => new MapEntry(v, k));
     }
     return reverseMap;
   }

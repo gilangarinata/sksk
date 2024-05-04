@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_html/flutter_html.dart';
+// import 'package:flutter_html/flutter_html.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:solar_kita/network/model/response/voucher_response.dart';
 import 'package:solar_kita/network/repository/koinkita_repository.dart';
@@ -22,7 +22,7 @@ import '../koin_kita_state.dart';
 
 class DetailVoucherScreen extends StatelessWidget {
   bool isRedeem;
-  Datum data;
+  Datum? data;
 
   DetailVoucherScreen(this.isRedeem, this.data);
 
@@ -41,7 +41,7 @@ class DetailVoucherScreen extends StatelessWidget {
 
 class DetailVoucherScreenContent extends StatefulWidget {
   bool isRedeem;
-  Datum data;
+  Datum? data;
 
   DetailVoucherScreenContent(this.isRedeem, this.data);
 
@@ -50,10 +50,10 @@ class DetailVoucherScreenContent extends StatefulWidget {
 }
 
 class _DetailVoucherScreenState extends State<DetailVoucherScreenContent> {
-  Size size;
-  KoinKitaBloc bloc;
+  late Size size;
+  late KoinKitaBloc bloc;
   bool _isLoading = false;
-  String _localPath;
+  late String _localPath;
 
   bool downloading = true;
   String downloadingStr = "No data";
@@ -67,7 +67,7 @@ class _DetailVoucherScreenState extends State<DetailVoucherScreenContent> {
 
   Future<String> _getToken() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return "Bearer " + prefs.getString(PrefData.TOKEN);
+    return "Bearer ${prefs.getString(PrefData.TOKEN)}";
   }
 
   Future<void> openFile(String filename) async {
@@ -169,7 +169,7 @@ class _DetailVoucherScreenState extends State<DetailVoucherScreenContent> {
         centerTitle: true,
         title: MyText.myTextHeader2("Detail Voucher", MyColors.accentDark),
       ),
-      body: BlocListener<KoinKitaBloc, KoinKitaState>(
+      body: BlocListener<KoinKitaBloc, KoinKitaState?>(
         listener: (context, state) async {
           if (state is ErrorState) {
             setState(() {
@@ -188,71 +188,71 @@ class _DetailVoucherScreenState extends State<DetailVoucherScreenContent> {
               MySnackbar.successSnackbar(context, "Redeem Success");
               Navigator.pop(context,201);
             } else {
-              MySnackbar.errorSnackbar(context, state.responseRedeem.message);
+              MySnackbar.errorSnackbar(context, state.responseRedeem.message ?? "");
             }
           }
         },
-        child: Container(
-          color: MyColors.white,
-          child: ListView(
-            children: [
-            VoucherCardWidget(isRedeem: null,voucher: widget.data,koin: ""),
-              SizedBox(height: 10,),
-              Container(height: 10, color: MyColors.grey_5,),
-              SizedBox(height: 10,),
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    MyText.myTextHeader2("Detail Produk", MyColors.accentDark),
-                    SizedBox(height: 10,),
-                    Html(
-                        data: widget.data.description == null ? "" : widget.data
-                            .description)
-                  ],
-                ),
-              ),
-              SizedBox(height: 10,),
-              Container(height: 10, color: MyColors.grey_5,),
-              SizedBox(height: 10,),
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    MyText.myTextHeader2(
-                        "Syarat dan Ketentuan", MyColors.accentDark),
-                    SizedBox(height: 10,),
-                    Html(data: widget.data.syarat == null ? "" : widget.data
-                        .syarat)
-                  ],
-                ),
-              ),
-              SizedBox(height: 10,),
-              Container(height: 10, color: MyColors.grey_5,),
-              SizedBox(height: 10,),
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    MyText.myTextHeader2("Cara Pakai", MyColors.accentDark),
-                    SizedBox(height: 10,),
-                    Html(data: widget.data.caraRedeem == null ? "" : widget.data
-                        .caraRedeem,)
-                  ],
-                ),
-              ),
-
-            ],
-          ),
-        ),
+        // child: Container(
+        //   color: MyColors.white,
+        //   child: ListView(
+        //     children: [
+        //     VoucherCardWidget(isRedeem: null,voucher: widget.data,koin: "", onSuccess: null,),
+        //       SizedBox(height: 10,),
+        //       Container(height: 10, color: MyColors.grey_5,),
+        //       SizedBox(height: 10,),
+        //       Container(
+        //         margin: EdgeInsets.symmetric(horizontal: 10),
+        //         child: Column(
+        //           crossAxisAlignment: CrossAxisAlignment.start,
+        //           children: [
+        //             MyText.myTextHeader2("Detail Produk", MyColors.accentDark),
+        //             SizedBox(height: 10,),
+        //             Html(
+        //                 data: widget.data.description == null ? "" : widget.data
+        //                     .description)
+        //           ],
+        //         ),
+        //       ),
+        //       SizedBox(height: 10,),
+        //       Container(height: 10, color: MyColors.grey_5,),
+        //       SizedBox(height: 10,),
+        //       Container(
+        //         margin: EdgeInsets.symmetric(horizontal: 10),
+        //         child: Column(
+        //           crossAxisAlignment: CrossAxisAlignment.start,
+        //           children: [
+        //             MyText.myTextHeader2(
+        //                 "Syarat dan Ketentuan", MyColors.accentDark),
+        //             SizedBox(height: 10,),
+        //             Html(data: widget.data.syarat == null ? "" : widget.data
+        //                 .syarat)
+        //           ],
+        //         ),
+        //       ),
+        //       SizedBox(height: 10,),
+        //       Container(height: 10, color: MyColors.grey_5,),
+        //       SizedBox(height: 10,),
+        //       Container(
+        //         margin: EdgeInsets.symmetric(horizontal: 10),
+        //         child: Column(
+        //           crossAxisAlignment: CrossAxisAlignment.start,
+        //           children: [
+        //             MyText.myTextHeader2("Cara Pakai", MyColors.accentDark),
+        //             SizedBox(height: 10,),
+        //             Html(data: widget.data.caraRedeem == null ? "" : widget.data
+        //                 .caraRedeem,)
+        //           ],
+        //         ),
+        //       ),
+        //
+        //     ],
+        //   ),
+        // ),
       ),
       bottomNavigationBar: InkWell(
         onTap: () async{
           SharedPreferences prefs = await SharedPreferences.getInstance();
-          bool isDemo = prefs.getBool(PrefData.IS_DEMO);
+          bool isDemo = prefs.getBool(PrefData.IS_DEMO) ?? false;
 
           if(isDemo){
             MySnackbar.showToast("Not Available. You are using demo account.");
@@ -262,11 +262,11 @@ class _DetailVoucherScreenState extends State<DetailVoucherScreenContent> {
 
           if (widget.isRedeem) {
             if (widget.data != null) {
-              bloc.add(RedeemVoucher(widget.data.id.toString()));
+              bloc.add(RedeemVoucher(widget.data?.id?.toString() ?? ""));
             }
           } else {
             if (widget.data != null) {
-              downloadFile("https://apps.solarkita.com/my-vouchers/"+widget.data.id.toString(), DateTime
+              downloadFile("https://apps.solarkita.com/my-vouchers/"+(widget.data?.id?.toString() ?? ""), DateTime
                   .now()
                   .timeZoneOffset
                   .inMilliseconds

@@ -54,13 +54,13 @@ class _ProfileScreenState extends State<ProfileScreenContent> {
     await launch(url);
   }
 
-  ProfileBloc bloc;
+  late ProfileBloc bloc;
   String selectedProfileImage = "";
 
   void getSelectedProfileImage() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      selectedProfileImage = prefs.getString("AVATAR-IMAGE");
+      selectedProfileImage = prefs.getString("AVATAR-IMAGE") ?? "";
     });
   }
 
@@ -73,12 +73,12 @@ class _ProfileScreenState extends State<ProfileScreenContent> {
     getSelectedProfileImage();
   }
 
-  ProfileResponse profileResponse;
+  ProfileResponse? profileResponse;
 
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<ProfileBloc,ProfileState>(
+    return BlocListener<ProfileBloc,ProfileState?>(
       listener: (context, state) async {
         if (state is LoadingState) {
           setState(() {
@@ -142,8 +142,8 @@ class _ProfileScreenState extends State<ProfileScreenContent> {
                           backgroundColor: MyColors.accentDark,
                         ),
                         SizedBox(height: 10,),
-                        MyText.myTextHeader2(profileResponse != null ? profileResponse.data.name : "", MyColors.accentDark),
-                        MyText.myTextHeader3(profileResponse != null ? profileResponse.data.email : "", MyColors.accentDark)
+                        MyText.myTextHeader2(profileResponse != null ? profileResponse!.data!.name.toString() : "", MyColors.accentDark),
+                        MyText.myTextHeader3(profileResponse != null ? profileResponse!.data!.email.toString() : "", MyColors.accentDark)
                       ],
                     )
                 ),
@@ -158,7 +158,7 @@ class _ProfileScreenState extends State<ProfileScreenContent> {
                       InkWell(
                         onTap: () async{
                           SharedPreferences prefs = await SharedPreferences.getInstance();
-                          bool isDemo = prefs.getBool(PrefData.IS_DEMO);
+                          bool isDemo = prefs.getBool(PrefData.IS_DEMO) ?? false;
 
                           if(isDemo){
                             MySnackbar.showToast("Not Available. You are using demo account.");
@@ -167,7 +167,7 @@ class _ProfileScreenState extends State<ProfileScreenContent> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => UpdateProfileScreen(profileResponse),
+                              builder: (context) => profileResponse != null ? UpdateProfileScreen(profileResponse!) : Container(),
                             ),
                           ).then((value) {
                             getSelectedProfileImage();
@@ -183,9 +183,9 @@ class _ProfileScreenState extends State<ProfileScreenContent> {
                       InkWell(
                         onTap: () async {
                           SharedPreferences prefs = await SharedPreferences.getInstance();
-                          bool isDemo = prefs.getBool(PrefData.IS_DEMO);
+                          bool? isDemo = prefs.getBool(PrefData.IS_DEMO);
 
-                          if(isDemo){
+                          if(isDemo == true){
                             MySnackbar.showToast("Not Available. You are using demo account.");
                             return;
                           }

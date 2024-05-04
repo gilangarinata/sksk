@@ -14,8 +14,8 @@ class GraphDayParentResponse {
     this.data,
   });
 
-  int status;
-  List<GraphDayResponse> data;
+  int? status;
+  List<GraphDayResponse>? data;
 
   factory GraphDayParentResponse.fromJson(Map<String, dynamic> json) => GraphDayParentResponse(
     status: json["status"],
@@ -24,7 +24,7 @@ class GraphDayParentResponse {
 
   Map<String, dynamic> toJson() => {
     "status": status,
-    "data": List<dynamic>.from(data.map((x) => x.toJson())),
+    "data": List<dynamic>.from(data!.map((x) => x.toJson())),
   };
 }
 
@@ -41,13 +41,13 @@ class GraphDayResponse {
   });
 
   dynamic timeStamp;
-  String serial;
+  String? serial;
   dynamic totalYield;
-  double power;
-  DateTime dateI;
-  String timeI;
+  double? power;
+  DateTime? dateI;
+  String? timeI;
   dynamic powerPct;
-  int pVoutput;
+  int? pVoutput;
 
   factory GraphDayResponse.fromJson(Map<String, dynamic> json) => GraphDayResponse(
     timeStamp: json["TimeStamp"],
@@ -65,7 +65,7 @@ class GraphDayResponse {
     "Serial": serial,
     "TotalYield": totalYield,
     "Power": power,
-    "DateI": "${dateI.year.toString().padLeft(4, '0')}-${dateI.month.toString().padLeft(2, '0')}-${dateI.day.toString().padLeft(2, '0')}",
+    "DateI": "${dateI?.year.toString().padLeft(4, '0')}-${dateI?.month.toString().padLeft(2, '0')}-${dateI?.day.toString().padLeft(2, '0')}",
     "TimeI": timeI,
     "PowerPct": powerPct,
     "PVoutput": pVoutput == null ? null : pVoutput,

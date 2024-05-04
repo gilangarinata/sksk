@@ -24,7 +24,7 @@ class ServiceRepositoryImpl implements ServiceRepository {
 
   Future<String> _getToken() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return "Bearer " + prefs.getString(PrefData.TOKEN);
+    return "Bearer ${prefs.getString(PrefData.TOKEN)}";
   }
 
   @override

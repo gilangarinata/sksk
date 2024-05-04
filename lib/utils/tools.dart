@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class Tools {
-  static Navigator changeScreen(BuildContext context, Widget destination) {
+  static Navigator? changeScreen(BuildContext context, Widget destination) {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
@@ -12,7 +12,7 @@ class Tools {
     );
   }
 
-  static Navigator addScreen(BuildContext context, Widget destination) {
+  static Navigator? addScreen(BuildContext context, Widget destination) {
     Navigator.push(
       context,
       MaterialPageRoute(

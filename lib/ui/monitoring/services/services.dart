@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:solar_kita/network/model/response/help_center_list_response.dart';
@@ -51,19 +50,19 @@ class _ServicesScreenState extends State<ServicesScreenChild> {
     HelpType("Lain-lain", 4),
   ];
 
-  TextEditingController messageController;
+  late TextEditingController messageController;
 
   bool postingLoading = false;
-  ServiceBloc bloc;
-  ServiceType selectedService;
-  HelpType selectedHelpType;
+  late ServiceBloc bloc;
+  late ServiceType selectedService;
+  late HelpType selectedHelpType;
   String currentMessage = "";
   String currentDate = "Select Date";
   String currentTime = "Select Time";
   var serviceController = TextEditingController();
 
-  HelpCenterListResponse _helpCenterListResponse;
-  MaintenanceListResponse _maintenanceListResponse;
+  HelpCenterListResponse? _helpCenterListResponse;
+  MaintenanceListResponse? _maintenanceListResponse;
 
 
   void loadActivities(){
@@ -101,7 +100,7 @@ class _ServicesScreenState extends State<ServicesScreenChild> {
                     onChanged: (value) {
                       if (value != selectedService.name) {
                         setState(() {
-                          selectedService = value;
+                          selectedService = value as ServiceType;
                         });
                         Navigator.of(context).pop();
                       }
@@ -132,7 +131,7 @@ class _ServicesScreenState extends State<ServicesScreenChild> {
                     onChanged: (value) {
                       if (value != selectedHelpType.name) {
                         setState(() {
-                          selectedHelpType = value;
+                          selectedHelpType = value as HelpType;
                         });
                         Navigator.of(context).pop();
                       }
@@ -146,7 +145,7 @@ class _ServicesScreenState extends State<ServicesScreenChild> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<ServiceBloc,ServiceState>(
+    return BlocListener<ServiceBloc,ServiceState?>(
       listener: (context, state) async {
         if (state is LoadingState) {
           setState(() {
@@ -240,20 +239,36 @@ class _ServicesScreenState extends State<ServicesScreenChild> {
               visible: selectedService.id == services[1].id,
               child: Container(
                 child: InkWell(
-                  onTap: (){
-                    DatePicker.showDatePicker(context,
-                        showTitleActions: true,
-                        minTime: DateTime(2018, 3, 5),
-                        maxTime: DateTime(2030, 6, 7), onChanged: (date) {
-                          print('change $date');
-                        }, onConfirm: (date) {
-                          print('confirm $date');
-                          setState(() {
-                            currentDate = DateFormat('yyyy-MM-dd').format(date);
-                            print('change $currentDate');
-                          });
-                        },
-                        currentTime: DateTime.now(), locale: LocaleType.id);
+                  onTap: () async {
+                    final DateTime now = DateTime.now();
+                    final DateTime? pickedDate = await showDatePicker(
+                      context: context,
+                      initialDate: now,
+                      firstDate: DateTime(2000),
+                      lastDate: DateTime(2100),
+                    );
+
+                    if (pickedDate != null && pickedDate != now) {
+                      print('Date selected: ${pickedDate.toLocal()}');
+
+                      setState(() {
+                        currentDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+                        print('change $currentDate');
+                      });
+                    }
+                    // showDatePicker(context,
+                    //     showTitleActions: true,
+                    //     minTime: DateTime(2018, 3, 5),
+                    //     maxTime: DateTime(2030, 6, 7), onChanged: (date) {
+                    //       print('change $date');
+                    //     }, onConfirm: (date) {
+                    //       print('confirm $date');
+                    //       setState(() {
+                    //         currentDate = DateFormat('yyyy-MM-dd').format(date);
+                    //         print('change $currentDate');
+                    //       });
+                    //     },
+                    //     currentTime: DateTime.now(), locale: LocaleType.id);
                   },
                   child: Card(
                     shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(15),),
@@ -278,15 +293,51 @@ class _ServicesScreenState extends State<ServicesScreenChild> {
               visible: selectedService.id == services[1].id,
               child: Container(
                 child: InkWell(
-                  onTap: (){
-                    DatePicker.showTimePicker(context, onChanged: (date) {
+                  onTap: () async {
+                    final TimeOfDay? picked = await showTimePicker(
+                      context: context,
+                      initialTime: TimeOfDay.now(),
+                      // Optional changes to the time picker dialog appearance:
+                      initialEntryMode: TimePickerEntryMode.dial, // or TimePickerEntryMode.input
+                      // Confirm and cancel text can be customized:
+                      confirmText: 'CONFIRM',
+                      cancelText: 'CANCEL',
+                      // Time picker with 24 hour format:
+                      builder: (BuildContext context, Widget? child) {
+                        return MediaQuery(
+                          data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: false),
+                          child: child!,
+                        );
+                      },
+                    );
 
-                        }, onConfirm: (date) {
-                      setState(() {
-                        currentTime = DateFormat('kk:mm:ss').format(date);
-                        print('change $currentTime');
-                      });
-                        }, currentTime: DateTime.now(), locale: LocaleType.id);
+                    if (picked != null) {
+                      // Do something with the time chosen by the user
+                      print('Time selected: ${picked.format(context)}');
+
+                        setState(() {
+                          DateTime now = DateTime.now();
+                          DateTime pickedDateTime = DateTime(
+                            now.year,
+                            now.month,
+                            now.day,
+                            picked.hour,
+                            picked.minute,
+                          );
+                          currentTime = DateFormat('kk:mm:ss').format(pickedDateTime);
+                          print('change $currentTime');
+                        });
+                    }
+
+
+                    // DatePicker.showTimePicker(context, onChanged: (date) {
+                    //
+                    //     }, onConfirm: (date) {
+                    //   setState(() {
+                    //     currentTime = DateFormat('kk:mm:ss').format(date);
+                    //     print('change $currentTime');
+                    //   });
+                    //     }, currentTime: DateTime.now(), locale: LocaleType.id);
                   },
                   child: Card(
                     shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(15),),
@@ -339,7 +390,7 @@ class _ServicesScreenState extends State<ServicesScreenChild> {
               child: Center(
                 child: postingLoading ? ProgressLoading() : MyButton.myPrimaryButton("Submit", () async{
                   SharedPreferences prefs = await SharedPreferences.getInstance();
-                  bool isDemo = prefs.getBool(PrefData.IS_DEMO);
+                  bool isDemo = prefs.getBool(PrefData.IS_DEMO) ?? false;
                   
                   if(isDemo){
                     MySnackbar.showToast("Not Available. You are using demo account.");

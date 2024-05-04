@@ -14,8 +14,8 @@ class SystemProfileResponse {
     this.data,
   });
 
-  int status;
-  Data data;
+  int? status;
+  Data? data;
 
   factory SystemProfileResponse.fromJson(Map<String, dynamic> json) => SystemProfileResponse(
     status: json["status"],
@@ -24,7 +24,7 @@ class SystemProfileResponse {
 
   Map<String, dynamic> toJson() => {
     "status": status,
-    "data": data.toJson(),
+    "data": data?.toJson(),
   };
 }
 
@@ -40,14 +40,14 @@ class Data {
     this.solarSystemProfile
   });
 
-  String todayProduction;
-  String monthlyEnergy;
-  String totalEnergy;
-  String totalSaving;
-  String monthlySaving;
-  String co2Reduced;
-  List<SolarSystem> solarSystems;
-  List<SolarSystemProfle> solarSystemProfile;
+  String? todayProduction;
+  String? monthlyEnergy;
+  String? totalEnergy;
+  String? totalSaving;
+  String? monthlySaving;
+  String? co2Reduced;
+  List<SolarSystem>? solarSystems;
+  List<SolarSystemProfle>? solarSystemProfile;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
     todayProduction: json["today_production"],
@@ -67,8 +67,8 @@ class Data {
     "total_saving": totalSaving,
     "monthly_saving": monthlySaving,
     "co2_reduced": co2Reduced,
-    "solar_systems": List<dynamic>.from(solarSystems.map((x) => x.toJson())),
-    "solar_system_profle": List<dynamic>.from(solarSystemProfile.map((x) => x.toJson())),
+    "solar_systems": List<dynamic>.from(solarSystems!.map((x) => x.toJson())),
+    "solar_system_profle": List<dynamic>.from(solarSystemProfile!.map((x) => x.toJson())),
   };
 }
 
@@ -79,9 +79,9 @@ class SolarSystem {
     this.location,
   });
 
-  String invId;
-  String pvSysPower;
-  String location;
+  String? invId;
+  String? pvSysPower;
+  String? location;
 
   factory SolarSystem.fromJson(Map<String, dynamic> json) => SolarSystem(
     invId: json["inv_id"],
@@ -108,13 +108,13 @@ class SolarSystemProfle {
     this.communication,
   });
 
-  String pvSysPower;
-  String commisioning;
-  String location;
-  String modules;
-  String inverter;
-  String solarSystemProfleOperator;
-  String communication;
+  String? pvSysPower;
+  String? commisioning;
+  String? location;
+  String? modules;
+  String? inverter;
+  String? solarSystemProfleOperator;
+  String? communication;
 
   factory SolarSystemProfle.fromJson(Map<String, dynamic> json) => SolarSystemProfle(
     pvSysPower: json["pv_sys_power"],

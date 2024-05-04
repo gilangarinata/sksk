@@ -20,19 +20,19 @@ class MyVouchersList extends StatefulWidget {
   String koin;
   bool isFromRedeem;
 
-  MyVouchersList({this.title, this.voucherResponse, this.koin, this.isFromRedeem = false, this.isRedeedm = false});
+  MyVouchersList({required this.title, required this.voucherResponse, required this.koin, this.isFromRedeem = false, this.isRedeedm = false});
 
   @override
   _MyVouchersListState createState() => _MyVouchersListState();
 }
 
 class _MyVouchersListState extends State<MyVouchersList> {
-  Size size;
+  late Size size;
 
   List<Widget> _buildVouchers(){
     List<Widget> vs = [];
-    for(int i=0; i < widget.voucherResponse.data.length; i++){
-      vs.add(VoucherCardWidget(isRedeem: widget.isRedeedm,voucher: widget.voucherResponse.data[i],koin: widget.koin,onSuccess: (){},));
+    for(int i=0; i < (widget.voucherResponse.data?.length ?? 0); i++){
+      vs.add(VoucherCardWidget(isRedeem: widget.isRedeedm,voucher: widget.voucherResponse.data![i],koin: widget.koin,onSuccess: (){},));
       vs.add(SizedBox(height: 10,));
     }
     return vs;

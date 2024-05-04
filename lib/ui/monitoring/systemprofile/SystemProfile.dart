@@ -14,7 +14,6 @@ import 'package:solar_kita/widget/progress_loading.dart';
 
 
 class SystemProfile extends StatelessWidget {
-  const SystemProfile({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,9 +36,9 @@ class SystemProfileChild extends StatefulWidget {
 
 class _SystemProfileChildState extends State<SystemProfileChild> with SingleTickerProviderStateMixin{
 
-  SystemProfileBloc bloc;
+  late SystemProfileBloc bloc;
   bool _isLoading = true;
-  SystemProfileResponse response;
+  late SystemProfileResponse response;
 
   @override
   void initState() {
@@ -55,7 +54,7 @@ class _SystemProfileChildState extends State<SystemProfileChild> with SingleTick
       height: double.infinity,
       padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
       color: MyColors.white,
-      child: BlocListener<SystemProfileBloc,SystemProfileState>(
+      child: BlocListener<SystemProfileBloc,SystemProfileState?>(
         listener: (context, state) async {
           if (state is SystemProfileError) {
             setState(() {
@@ -88,7 +87,7 @@ class _SystemProfileChildState extends State<SystemProfileChild> with SingleTick
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          MyText.bigText(response != null ? response.data.todayProduction : "", MyColors.accentDark),
+                          MyText.bigText(response != null ? response.data!.todayProduction.toString() : "", MyColors.accentDark),
                           MyText.myTextDescription(MyStrings.kwh, MyColors.accentDark)
                         ],
                       )
@@ -114,7 +113,7 @@ class _SystemProfileChildState extends State<SystemProfileChild> with SingleTick
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                MyText.bigText(response != null ? response.data.monthlyEnergy : "", MyColors.accentDark),
+                                MyText.bigText(response != null ? response.data!.monthlyEnergy.toString() : "", MyColors.accentDark),
                                 MyText.myTextDescription(MyStrings.kwh, MyColors.accentDark)
                               ],
                             )
@@ -140,7 +139,7 @@ class _SystemProfileChildState extends State<SystemProfileChild> with SingleTick
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 MyText.myTextDescription(MyStrings.rp, MyColors.accentDark),
-                                MyText.bigText(response != null ? response.data.monthlySaving : "", MyColors.accentDark),
+                                MyText.bigText(response != null ? response.data!.monthlySaving.toString() : "", MyColors.accentDark),
                               ],
                             ),
                           ],
@@ -157,7 +156,7 @@ class _SystemProfileChildState extends State<SystemProfileChild> with SingleTick
                   borderRadius: BorderRadius.circular(15),
                     border: Border.all(color: MyColors.accentDark,width: 2)
                 ),
-                child: Center(child: MyText.myTextHeader2("CO2 Reduced = " + (response != null ? response.data.co2Reduced : "") + "kg", MyColors.accentDark)),
+                child: Center(child: MyText.myTextHeader2("CO2 Reduced = " + (response != null ? response.data!.co2Reduced.toString() : "") + "kg", MyColors.accentDark)),
               ),
               Card(
                 shape: RoundedRectangleBorder(
@@ -178,7 +177,7 @@ class _SystemProfileChildState extends State<SystemProfileChild> with SingleTick
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                MyText.myTextHeader1(response != null ? response.data.totalEnergy : "", MyColors.accentDark),
+                                MyText.myTextHeader1(response != null ? response.data!.totalEnergy.toString() : "", MyColors.accentDark),
                                 SizedBox(width: 5,),
                                 MyText.myTextDescription2(MyStrings.kwh, MyColors.accentDark)
                               ],
@@ -205,7 +204,7 @@ class _SystemProfileChildState extends State<SystemProfileChild> with SingleTick
                                   children: [
                                     MyText.myTextDescription2(MyStrings.rp, MyColors.accentDark),
                                     SizedBox(width: 5,),
-                                    MyText.myTextHeader1(response != null ? response.data.totalSaving : "", MyColors.accentDark),
+                                    MyText.myTextHeader1(response != null ? response.data!.totalSaving.toString() : "", MyColors.accentDark),
                                   ],
                                 )
                               ],

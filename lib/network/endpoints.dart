@@ -1,6 +1,7 @@
 
 class Endpoints {
     static const String BASE_URL_TEST = "apps.solarkita.com";
+    // static const String BASE_URL_TEST = "dev-apps.solarkita.com";
     static const String GRAPH_DAILY = "/today-chart";
     static const String GRAPH_MONTHLY = "/daily-chart";
     static const String GRAPH_YEARLY = "/monthly-chart";

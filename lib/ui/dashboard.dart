@@ -18,14 +18,14 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProviderStateMixin {
-  TabController _tabController;
+  late TabController _tabController;
   List<String> imagesBottomActive = ["assets/2a.png","assets/3a.png","assets/4a.png","assets/5a.png",];
   List<String> imagesBottomInActive = ["assets/2b.png","assets/3b.png","assets/4b.png","assets/5b.png",];
   List<String> currentActive = ["assets/2a.png","assets/3b.png","assets/4b.png","assets/5b.png",];
 
   String _title = MyStrings.monitoring;
 
-  String selectedProfileImage = "";
+  String? selectedProfileImage = "";
 
   void getSelectedProfileImage() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -92,7 +92,7 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
               backgroundColor: MyColors.accentDark,
               child: ClipRRect(
                 borderRadius:BorderRadius.circular(50),
-                child: selectedProfileImage == null ? Image.asset("assets/avatar1.png")  : Image.asset(selectedProfileImage),
+                child: selectedProfileImage == null ? Image.asset("assets/avatar1.png")  : Image.asset(selectedProfileImage ?? ""),
               ),
             ),
           ),

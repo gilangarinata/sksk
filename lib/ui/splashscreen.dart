@@ -16,12 +16,12 @@ class SplashScreen extends StatelessWidget {
     Future<void> _getPrefData() async{
       SharedPreferences prefs = await SharedPreferences.getInstance();
       bool isLoggedIn = prefs.containsKey(PrefData.TOKEN);
-      bool isDemo = prefs.getBool(PrefData.IS_DEMO);
+      bool isDemo = prefs.getBool(PrefData.IS_DEMO) ?? false;
       if (isLoggedIn && !isDemo) {
         Tools.changeScreen(context, DashboardScreen());
       } else {
         try {
-          var isSkipIntro = prefs.getBool("skipIntro");
+          var isSkipIntro = prefs.getBool("skipIntro") ?? false;
           if(isSkipIntro){
             Tools.changeScreen(context, LoginScreen());
           }else{

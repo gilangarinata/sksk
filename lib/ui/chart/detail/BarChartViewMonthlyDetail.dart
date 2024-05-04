@@ -6,10 +6,11 @@ import 'package:solar_kita/network/model/response/graph_month_response.dart';
 import 'package:solar_kita/network/model/response/graph_total_response.dart';
 import 'package:solar_kita/network/model/response/graph_year_response.dart';
 import 'package:solar_kita/res/my_colors.dart';
+import 'package:solar_kita/ui/chart/BarChartViewMonthly.dart';
 
 class BarChartMonthlyDetail extends StatefulWidget {
   List<GraphMonthResponse> graphMonthResponse;
-  BarChartMonthlyDetail({this.graphMonthResponse});
+  BarChartMonthlyDetail({required this.graphMonthResponse});
 
   @override
   State<StatefulWidget> createState() => BarChartMonthlyDetailState(graphMonthResponse);
@@ -19,12 +20,12 @@ class BarChartMonthlyDetailState extends State<BarChartMonthlyDetail> {
   final Color leftBarColor = MyColors.accentDark;
   final double width = 20;
 
-  List<BarChartGroupData> rawBarGroups;
-  List<BarChartGroupData> showingBarGroups;
+  late List<BarChartGroupData> rawBarGroups;
+  late List<BarChartGroupData> showingBarGroups;
 
   int touchedGroupIndex = -1;
 
-  List<GraphMonthResponse> graphMonthResponse;
+  List<GraphMonthResponse> graphMonthResponse = [];
 
 
   BarChartMonthlyDetailState(this.graphMonthResponse);
@@ -129,7 +130,7 @@ class BarChartMonthlyDetailState extends State<BarChartMonthlyDetail> {
                                   return '';
                                 } else {
                                   var dateI = graphMonthResponse[value.toInt()].dateI;
-                                  return dateI;
+                                  return dateI ?? "";
                                 }
                               },
                             ),

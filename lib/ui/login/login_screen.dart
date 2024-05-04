@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -20,7 +22,6 @@ import 'package:solar_kita/widget/progress_loading.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +43,7 @@ class LoginScreenChild extends StatefulWidget {
 
 class _LoginScreenChildState extends State<LoginScreenChild> {
 
-  LoginBloc loginBloc;
+  late LoginBloc loginBloc;
   TextEditingController _usernameController = new TextEditingController();
   TextEditingController _passwordController = new TextEditingController();
   bool _isLoading = false;
@@ -58,7 +59,7 @@ class _LoginScreenChildState extends State<LoginScreenChild> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: MyColors.white,
-      body: BlocListener<LoginBloc,LoginState>(
+      body: BlocListener<LoginBloc,LoginState?>(
         listener: (context, state) async {
           if (state is LoginError) {
             setState(() {
@@ -92,7 +93,7 @@ class _LoginScreenChildState extends State<LoginScreenChild> {
                       style: MyFieldStyle.myFieldStylePrimary(),
                       keyboardType: TextInputType.text,
                       validator: (value) {
-                        if (value.isEmpty) {
+                        if (value?.isEmpty == true) {
                           return MyStrings.mustNotEmpty;
                         }
                         return null;
@@ -114,10 +115,10 @@ class _LoginScreenChildState extends State<LoginScreenChild> {
                       controller: _passwordController,
                       style: MyFieldStyle.myFieldStylePrimary(),
                       validator: (value) {
-                        if (value.isEmpty) {
+                        if (value?.isEmpty == true) {
                           return MyStrings.mustNotEmpty;
                         } else {
-                          if (!Validator.passwordValidation(value)) {
+                          if (!Validator.passwordValidation(value!)) {
                             return MyStrings.atleast5;
                           }
                         }
@@ -188,7 +189,7 @@ class _LoginScreenChildState extends State<LoginScreenChild> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text("Not a SolarKita member yet?", style: TextStyle(fontSize: 14)),
+                            Text("Not a SolarKita member yet?", style: TextStyle(fontSize: 14, color: Colors.black)),
                             Text(" Try our demo", style: TextStyle(fontSize: 14, color: MyColors.grey_80, fontWeight: FontWeight.bold)),
                           ],
                         ),

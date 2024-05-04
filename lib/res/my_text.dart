@@ -26,11 +26,11 @@ class MyText {
     );
   }
 
-  static TextStyle title(BuildContext context){
+  static TextStyle? title(BuildContext context){
     return Theme.of(context).textTheme.subtitle1;
   }
 
-  static TextStyle subhead(BuildContext context){
+  static TextStyle? subhead(BuildContext context){
     return Theme.of(context).textTheme.bodyText2;
   }
 

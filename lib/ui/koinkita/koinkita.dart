@@ -44,7 +44,7 @@ class KoinKitaScreenChild extends StatefulWidget {
 }
 
 class _KoinKitaScreenState extends State<KoinKitaScreenChild> {
-  Size size;
+  late Size size;
   PageController pageController = PageController(
     initialPage: 0,
   );
@@ -54,11 +54,11 @@ class _KoinKitaScreenState extends State<KoinKitaScreenChild> {
 
   String koin = "";
   bool _isLoading = false;
-  VoucherResponse _voucherResponse;
-  VoucherResponse _myVoucherResponse;
-  VoucherCategoriesResponse _voucherCategoriesResponse;
-  VoucherBannerResponse _voucherBannerResponse;
-  KoinKitaBloc bloc;
+  VoucherResponse? _voucherResponse;
+  VoucherResponse? _myVoucherResponse;
+  VoucherCategoriesResponse? _voucherCategoriesResponse;
+  VoucherBannerResponse? _voucherBannerResponse;
+  late KoinKitaBloc bloc;
 
   void _launchURL(String url) async {
     if (!await launch(url)) throw 'Could not launch $url';
@@ -68,6 +68,9 @@ class _KoinKitaScreenState extends State<KoinKitaScreenChild> {
   void initState() {
     super.initState();
     bloc = context.read<KoinKitaBloc>();
+  }
+
+  void refresh() {
     bloc.add(GetKoin());
     bloc.add(GetVouchers());
     bloc.add(GetVoucherCategories());
@@ -78,12 +81,12 @@ class _KoinKitaScreenState extends State<KoinKitaScreenChild> {
   List<Widget> getHorizontalCategories(){
     List<Widget> listView = [];
     if(_voucherCategoriesResponse != null){
-      for(int i = 0; i < _voucherCategoriesResponse.data.length; i ++){
-        var item = _voucherCategoriesResponse.data[i];
+      for(int i = 0; i < (_voucherCategoriesResponse?.data?.length ?? 0); i ++){
+        var item = _voucherCategoriesResponse?.data?[i];
         listView.add(
           InkWell(
             onTap: (){
-              bloc.add(GetVouchersCategoriesDetail(item.id.toString(),item.name));
+              bloc.add(GetVouchersCategoriesDetail(item?.id.toString() ?? "",item?.name ?? ""));
             },
             child: Container(
               width: (size.width / 2.5) - 10,
@@ -97,9 +100,9 @@ class _KoinKitaScreenState extends State<KoinKitaScreenChild> {
               child: Center(child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.network(item.icon, width: 80,height: 80,fit: BoxFit.cover,),
+                  Image.network(item?.icon ?? "", width: 80,height: 80,fit: BoxFit.cover,),
                   SizedBox(height: 10,),
-                  MyText.myTextDescription(item.name, MyColors.accentDark)
+                  MyText.myTextDescription(item?.name ?? "", MyColors.accentDark)
                 ],
               )),
             ),
@@ -113,15 +116,17 @@ class _KoinKitaScreenState extends State<KoinKitaScreenChild> {
   List<Widget> _buildVouchers(){
     List<Widget> vs = [];
     if(_voucherResponse != null){
-      for(int i=0; i < _voucherResponse.data.length; i++){
-        vs.add(VoucherCardWidget(isRedeem: true,voucher: _voucherResponse.data[i],koin: "",onSuccess: (value){
+      for(int i=0; i < (_voucherResponse?.data?.length ?? 0); i++){
+        vs.add(VoucherCardWidget(isRedeem: true,voucher: _voucherResponse?.data?[i],koin: "",onSuccess: (value){
           if(value == 201) {
             setState(() {
               _isLoading = true;
             });
             Timer(Duration(seconds: 5), () {
-              Tools.addScreen(context, MyVouchersList(
-                voucherResponse: _myVoucherResponse, koin: koin, isFromRedeem : true));
+              if(_myVoucherResponse != null) {
+                Tools.addScreen(context, MyVouchersList(
+                  voucherResponse: _myVoucherResponse!, koin: koin, isFromRedeem : true, title: '',));
+              }
             });
             bloc.add(GetMyVouchers());
             bloc.add(GetVouchers());
@@ -136,7 +141,7 @@ class _KoinKitaScreenState extends State<KoinKitaScreenChild> {
   @override
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
-    return BlocListener<KoinKitaBloc, KoinKitaState>(
+    return BlocListener<KoinKitaBloc, KoinKitaState?>(
       listener: (context, state) async {
         if (state is ErrorState) {
           setState(() {
@@ -150,13 +155,13 @@ class _KoinKitaScreenState extends State<KoinKitaScreenChild> {
         } else if (state is LoadedState) {
           setState(() {
             _isLoading = false;
-            koin = state.items.data.availableKoin;
+            koin = state.items.data?.availableKoin ?? "";
           });
         }else if(state is VoucherLoadedState){
           setState(() {
             _isLoading = false;
             _voucherResponse = state.items;
-            print("get voucher success : "+ _voucherResponse.data[0].image);
+            // print("get voucher success : "+ _voucherResponse.data[0].image);
           });
         }else if(state is MyVoucherCategoriesDetailLoadedState){
           setState(() {
@@ -164,12 +169,14 @@ class _KoinKitaScreenState extends State<KoinKitaScreenChild> {
           });
           Tools.addScreen(context, MyVouchersList(title: state.title,voucherResponse: state.items,koin: koin,isRedeedm : true));
         } else if(state is VoucherCategoriesLoadedState){
+          print("voucher ctegories size : ${state.items.data?.map((e) => e.icon)}");
           setState(() {
             _voucherCategoriesResponse = state.items;
           });
         }else if(state is VoucherBannerLoadedState){
           setState(() {
             _voucherBannerResponse = state.items;
+            print("voucher banner size : ${state.items.data?.length}");
           });
         }else if(state is MyVoucherLoadedState){
           setState(() {
@@ -181,68 +188,73 @@ class _KoinKitaScreenState extends State<KoinKitaScreenChild> {
       child: _isLoading ? ProgressLoading() : Container(
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         color: MyColors.white,
-        child: ListView(
-          children: [
-            Row(children: [
+        child: RefreshIndicator(
+          onRefresh: () {
+            refresh();
+            return Future(() => null);
+          },
+          child: ListView(
+            children: [
+              Row(children: [
+                Container(
+                  child: MyButton.myBorderButton(MyStrings.myVouchers, 5,  (){
+                    if(_myVoucherResponse != null){
+                      Tools.addScreen(context, MyVouchersList(voucherResponse: _myVoucherResponse!, koin: koin, title: '',));
+                    }
+                  }),
+                ),
+                Spacer(),
+                Image.asset('assets/coins.png',width: 20,),
+                SizedBox(width: 5,),
+                MyText.myTextDescription(koin, MyColors.grey_60),
+              ],),
+              SizedBox(height: 20,),
               Container(
-                width: size.width / 3,
-                child: MyButton.myBorderButton(MyStrings.myVouchers, 5,  (){
-                  if(_myVoucherResponse != null){
-                    Tools.addScreen(context, MyVouchersList(voucherResponse: _myVoucherResponse, koin: koin,));
-                  }
-                }),
+                width: size.width,
+                height: 150,
+                child: PageView(
+                  controller: pageController,
+                  children: buildPageViewItem(),
+                  onPageChanged:(index) {
+                    setState(() {
+                      page = index;
+                    });
+                  },
+                ),
               ),
-              Spacer(),
-              Image.asset('assets/coins.png',width: 20,),
-              SizedBox(width: 5,),
-              MyText.myTextDescription(koin, MyColors.grey_60),
-            ],),
-            SizedBox(height: 20,),
-            Container(
-              width: size.width,
-              height: 150,
-              child: PageView(
-                controller: pageController,
-                children: buildPageViewItem(),
-                onPageChanged:(index) {
-                  setState(() {
-                    page = index;
-                  });
-                },
+              Container(
+                height: 30,
+                child: Align(
+                  alignment: Alignment.center,
+                  child: buildDots(context),
+                ),
               ),
-            ),
-            Container(
-              height: 30,
-              child: Align(
-                alignment: Alignment.center,
-                child: buildDots(context),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 20),
+                child: MyText.myTextHeader2(MyStrings.merchantCategory, MyColors.accentDark),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 20),
-              child: MyText.myTextHeader2(MyStrings.merchantCategory, MyColors.accentDark),
-            ),
-            Container(
-              height: (size.width / 2.5) + 20,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: getHorizontalCategories()
+              Container(
+                height: (size.width / 2.5) + 20,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: getHorizontalCategories()
+                ),
               ),
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  MyText.myTextHeader2(MyStrings.newVouchers, MyColors.accentDark),
-                  SizedBox(height: 10,),
-                  Column(
-                    children: _buildVouchers(),
-                  )
-                ],
-              ),
-            )
-          ],
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    MyText.myTextHeader2(MyStrings.newVouchers, MyColors.accentDark),
+                    SizedBox(height: 10,),
+                    Column(
+                      children: _buildVouchers(),
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -251,22 +263,22 @@ class _KoinKitaScreenState extends State<KoinKitaScreenChild> {
   List<Widget> buildPageViewItem(){
     List<Widget> widgets = [];
     if(_voucherBannerResponse != null) {
-      for(int i = 0; i < _voucherBannerResponse.data.length; i ++){
-        var item = _voucherBannerResponse.data[i];
+      for(int i = 0; i < (_voucherBannerResponse?.data?.length ?? 0); i ++){
+        var item = _voucherBannerResponse?.data?[i];
         Widget wg = Card(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.0),
           ),
           child: InkWell(
             onTap: (){
-              String aStr = item.redirect_url.replaceAll(new RegExp(r'[^0-9]'),''); // '23'
-              if(aStr.isNotEmpty){
-                int categoryId = int.tryParse(aStr);
+              String? aStr = item?.redirect_url?.replaceAll(new RegExp(r'[^0-9]'),''); // '23'
+              if(aStr?.isNotEmpty == true){
+                int? categoryId = int.tryParse(aStr ?? "");
                 if(categoryId != null){
                   var categoryName = "";
-                  _voucherCategoriesResponse.data.forEach((element) {
+                  _voucherCategoriesResponse?.data?.forEach((element) {
                     if(element.id == categoryId){
-                      categoryName = element.name;
+                      categoryName = element.name ?? "";
                     }
                   });
                   bloc.add(GetVouchersCategoriesDetail(categoryId.toString(),categoryName));
@@ -276,7 +288,7 @@ class _KoinKitaScreenState extends State<KoinKitaScreenChild> {
             child: Container(
               width: double.infinity,
               height: 150,
-              child: Image.network(item.image, fit: BoxFit.fill,),
+              child: Image.network(item?.image ?? "", fit: BoxFit.fill,),
             ),
           ),
         );
@@ -290,7 +302,7 @@ class _KoinKitaScreenState extends State<KoinKitaScreenChild> {
     int bannerLength = 0;
 
     if(_voucherBannerResponse != null){
-      bannerLength = _voucherBannerResponse.data.length;
+      bannerLength = (_voucherBannerResponse?.data?.length ?? 0);
     }
 
 

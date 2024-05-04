@@ -14,8 +14,8 @@ class ResponseRedeem {
     this.message,
   });
 
-  int status;
-  String message;
+  int? status;
+  String? message;
 
   factory ResponseRedeem.fromJson(Map<String, dynamic> json) => ResponseRedeem(
     status: json["status"],

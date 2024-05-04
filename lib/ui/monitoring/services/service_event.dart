@@ -17,13 +17,16 @@ class FetchService extends ServiceEvent {
   FetchService(this.type, this.message, this.helpTypeId, this.date, this.time);
 
   @override
-  List<Object> get props => null;
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
+
+
 }
 
 class FetchHelpCenterList extends ServiceEvent {
-
   @override
-  List<Object> get props => null;
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
 
   FetchHelpCenterList();
 }
@@ -32,7 +35,8 @@ class FetchHelpCenterList extends ServiceEvent {
 class FetchMaintenanceList extends ServiceEvent {
 
   @override
-  List<Object> get props => null;
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
 
   FetchMaintenanceList();
 }
@@ -40,7 +44,8 @@ class FetchMaintenanceList extends ServiceEvent {
 class FetchNotificationList extends ServiceEvent {
 
   @override
-  List<Object> get props => null;
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
 
   FetchNotificationList();
 }

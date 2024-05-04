@@ -1,9 +1,9 @@
 class NotificationModel {
   final int id;
-  final String title;
-  final String description;
-  final String url;
-  final String image;
+  final String? title;
+  final String? description;
+  final String? url;
+  final String? image;
 
   NotificationModel(
       this.id, this.title, this.description, this.url, this.image);

@@ -54,22 +54,22 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreenContent> {
 
   int selectedProfile = 0;
   String selectedProfileImage = "";
-  ProfileBloc bloc;
-  TextEditingController nameController;
-  TextEditingController companyController;
+  ProfileBloc? bloc;
+  TextEditingController? nameController;
+  TextEditingController? companyController;
 
   void getSelectedProfileImage() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      selectedProfileImage = prefs.getString("AVATAR-IMAGE");
+      selectedProfileImage = prefs.getString("AVATAR-IMAGE")!;
     });
   }
 
   @override
   void initState() {
     super.initState();
-    nameController = TextEditingController(text: widget.profileResponse != null ? widget.profileResponse.data.name : "");
-    companyController = TextEditingController(text: widget.profileResponse != null ? widget.profileResponse.data.company : "");
+    nameController = TextEditingController(text: widget.profileResponse != null ? widget.profileResponse.data!.name : "");
+    companyController = TextEditingController(text: widget.profileResponse != null ? widget.profileResponse.data!.company : "");
     bloc = BlocProvider.of<ProfileBloc>(context);
     getSelectedProfile();
     getSelectedProfileImage();
@@ -77,12 +77,12 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreenContent> {
 
   void getSelectedProfile() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    selectedProfile = prefs.getInt("AVATAR");
+    selectedProfile = prefs.getInt("AVATAR")!;
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<ProfileBloc,ProfileState>(
+    return BlocListener<ProfileBloc,ProfileState?>(
         listener: (context, state) async {
           if (state is LoadingState) {
             setState(() {
@@ -234,7 +234,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreenContent> {
                 style: MyFieldStyle.myFieldStylePrimary(),
                 keyboardType: TextInputType.text,
                 validator: (value) {
-                  if (value.isEmpty) {
+                  if (value!.isEmpty) {
                     return MyStrings.mustNotEmpty;
                   }
                   return null;
@@ -257,7 +257,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreenContent> {
                 style: MyFieldStyle.myFieldStylePrimary(),
                 keyboardType: TextInputType.text,
                 validator: (value) {
-                  if (value.isEmpty) {
+                  if (value!.isEmpty) {
                     return MyStrings.mustNotEmpty;
                   }
                   return null;
@@ -277,11 +277,11 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreenContent> {
               ),
               TextFormField(
                 enabled: false,
-                initialValue: widget.profileResponse != null ? widget.profileResponse.data.email : "",
+                initialValue: widget.profileResponse != null ? widget.profileResponse.data!.email : "",
                 style: MyFieldStyle.myFieldStylePrimary(),
                 keyboardType: TextInputType.text,
                 validator: (value) {
-                  if (value.isEmpty) {
+                  if (value!.isEmpty) {
                     return MyStrings.mustNotEmpty;
                   }
                   return null;
@@ -301,9 +301,9 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreenContent> {
               ),
               SizedBox(height: 100,),
               MyButton.myPrimaryButton(MyStrings.save, (){
-                var name = nameController.text.toString();
-                var company = companyController.text.toString();
-                bloc.add(SaveProfile(name, company));
+                var name = nameController!.text.toString();
+                var company = companyController!.text.toString();
+                bloc?.add(SaveProfile(name, company));
               })
             ],
           ),

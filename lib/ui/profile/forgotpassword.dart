@@ -10,7 +10,7 @@ class ForgotPassword extends StatefulWidget {
 }
 
 class _PrivacyPolicyScreenState extends State<ForgotPassword> {
-  Size size;
+  late Size size;
   bool isLoading = true;
 
   @override

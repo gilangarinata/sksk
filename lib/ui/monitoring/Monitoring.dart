@@ -12,7 +12,7 @@ class MonitoringScreen extends StatefulWidget {
 
 class _MonitoringScreenState extends State<MonitoringScreen> with SingleTickerProviderStateMixin{
 
-  TabController _tabController;
+  late TabController _tabController;
 
   @override
   void initState() {

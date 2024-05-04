@@ -7,7 +7,7 @@ import 'package:solar_kita/res/my_colors.dart';
 
 class BarChartTotal extends StatefulWidget {
   List<GraphTotalResponse> graphTotalResponse;
-  BarChartTotal({this.graphTotalResponse});
+  BarChartTotal({required this.graphTotalResponse});
 
   @override
   State<StatefulWidget> createState() => BarChartTotalState(graphTotalResponse);
@@ -17,8 +17,8 @@ class BarChartTotalState extends State<BarChartTotal> {
   final Color leftBarColor = MyColors.accentDark;
   final double width = 20;
 
-  List<BarChartGroupData> rawBarGroups;
-  List<BarChartGroupData> showingBarGroups;
+  late List<BarChartGroupData> rawBarGroups;
+  late List<BarChartGroupData> showingBarGroups;
 
   int touchedGroupIndex = -1;
 
@@ -103,7 +103,7 @@ class BarChartTotalState extends State<BarChartTotal> {
                         margin: 20,
                         getTitles: (double value) {
                           var dateI = graphTotalResponse[value.toInt()].yearI;
-                          return dateI;
+                          return dateI ?? "";
                         },
                       ),
                       leftTitles: SideTitles(

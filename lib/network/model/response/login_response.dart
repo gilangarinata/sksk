@@ -16,10 +16,10 @@ class LoginResponse {
     this.refreshToken,
   });
 
-  String tokenType;
-  int expiresIn;
-  String accessToken;
-  String refreshToken;
+  String? tokenType;
+  int? expiresIn;
+  String? accessToken;
+  String? refreshToken;
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) => LoginResponse(
     tokenType: json["token_type"],

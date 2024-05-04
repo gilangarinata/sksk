@@ -8,7 +8,7 @@ import 'package:solar_kita/res/my_colors.dart';
 
 class BarChartMonthly extends StatefulWidget {
   List<GraphMonthResponse> graphMonthResponse;
-  BarChartMonthly({this.graphMonthResponse});
+  BarChartMonthly({required this.graphMonthResponse});
 
   @override
   State<StatefulWidget> createState() => BarChartMonthlyState(graphMonthResponse);
@@ -18,8 +18,8 @@ class BarChartMonthlyState extends State<BarChartMonthly> {
   final Color leftBarColor = MyColors.accentDark;
   final double width = 9;
 
-  List<BarChartGroupData> rawBarGroups;
-  List<BarChartGroupData> showingBarGroups;
+  late List<BarChartGroupData> rawBarGroups;
+  late List<BarChartGroupData> showingBarGroups;
 
 
   List<GraphMonthResponse> graphMonthResponse;
@@ -118,7 +118,7 @@ class BarChartMonthlyState extends State<BarChartMonthly> {
                             return '';
                           } else {
                             var dateI = graphMonthResponse[value.toInt()].dateI;
-                            return dateI;
+                            return dateI ?? "";
                           }
                         },
                       ),
@@ -150,18 +150,23 @@ class BarChartMonthlyState extends State<BarChartMonthly> {
   }
 
   double getMaxItemY(){
-    if(graphMonthResponse != null){
-      GraphMonthResponse max = graphMonthResponse.first;
-      graphMonthResponse.forEach((e) {
-        double dayYield = e.dayYield is int ? e.dayYield.toDouble() : double.parse(e.dayYield);
-        double dayYieldMax = max.dayYield is int ? max.dayYield.toDouble() : double.parse(max.dayYield);
-        if (dayYield > dayYieldMax) max = e;
-      });
-      var value = max.dayYield is int ? max.dayYield.toDouble() : double.parse(max.dayYield);
-      return value + (value * 50 / 100);
-    }else{
+    try {
+      if(graphMonthResponse != null){
+        GraphMonthResponse max = graphMonthResponse.first;
+        graphMonthResponse.forEach((e) {
+          double dayYield = e.dayYield is int ? e.dayYield.toDouble() : double.parse(e.dayYield);
+          double dayYieldMax = max.dayYield is int ? max.dayYield.toDouble() : double.parse(max.dayYield);
+          if (dayYield > dayYieldMax) max = e;
+        });
+        var value = max.dayYield is int ? max.dayYield.toDouble() : double.parse(max.dayYield);
+        return value + (value * 50 / 100);
+      }else{
+        return 0.0;
+      }
+    } catch(e) {
       return 0.0;
     }
+
   }
 
   BarChartGroupData makeGroupData(int x, double y1, double y2,int index) {

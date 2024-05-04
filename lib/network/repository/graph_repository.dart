@@ -11,21 +11,22 @@ import 'package:solar_kita/prefmanager/pref_data.dart';
 import 'package:solar_kita/utils/tools.dart';
 
 abstract class GraphRepository {
-  Future<List<GraphDayResponse>> fetchGraphDaily(String date, String inverterId);
-  Future<List<GraphMonthResponse>> fetchGraphMonthly(String month, String inverterId);
-  Future<List<GraphYearResponse>> fetchGraphYearly(String year, String inverterId);
-  Future<List<GraphTotalResponse>> fetchGraphTotal(String inverterId);
+  Future<List<GraphDayResponse>?> fetchGraphDaily(String date, String inverterId);
+  Future<List<GraphMonthResponse>?> fetchGraphMonthly(String month, String inverterId);
+  Future<List<GraphYearResponse>?> fetchGraphYearly(String year, String inverterId);
+  Future<List<GraphTotalResponse>?> fetchGraphTotal(String inverterId);
 }
 
 class GraphRepositoryImpl implements GraphRepository {
 
   Future<String> _getToken() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return "Bearer " + prefs.getString(PrefData.TOKEN);
+    var token = prefs.getString(PrefData.TOKEN);
+    return "Bearer $token";
   }
 
   @override
-  Future<List<GraphDayResponse>> fetchGraphDaily(String date , String inverterId) async {
+  Future<List<GraphDayResponse>?> fetchGraphDaily(String date , String inverterId) async {
     var headers = {
       "Authorization" : await _getToken()
     };
@@ -46,9 +47,9 @@ class GraphRepositoryImpl implements GraphRepository {
     if (response.statusCode == 200) {
       if (response.body != null) {
         try {
-          List<GraphDayResponse> results = graphDayParentResponseFromJson(response.body).data;
-          Tools.stackTracer(StackTrace.current, "SuksesG daily ${results.length}", response.statusCode);
-          return results;
+          List<GraphDayResponse>? results = graphDayParentResponseFromJson(response.body).data;
+          Tools.stackTracer(StackTrace.current, "", response.statusCode);
+          return results ?? [];
         } catch (e) {
           Tools.stackTracer(StackTrace.current, e.toString(), 500);
           throw Exception("---parseFailed");
@@ -63,7 +64,7 @@ class GraphRepositoryImpl implements GraphRepository {
   }
 
   @override
-  Future<List<GraphMonthResponse>> fetchGraphMonthly(String month, String inverterId) async {
+  Future<List<GraphMonthResponse>?> fetchGraphMonthly(String month, String inverterId) async {
     var headers = {
       "Authorization" : await _getToken()
     };
@@ -98,7 +99,7 @@ class GraphRepositoryImpl implements GraphRepository {
   }
 
   @override
-  Future<List<GraphTotalResponse>> fetchGraphTotal(String inverterId) async {
+  Future<List<GraphTotalResponse>?> fetchGraphTotal(String inverterId) async {
     var headers = {
       "Authorization" : await _getToken()
     };
@@ -115,8 +116,8 @@ class GraphRepositoryImpl implements GraphRepository {
     if (response.statusCode == 200) {
       if (response.body != null) {
         try {
-          List<GraphTotalResponse> results = graphTotalParentResponseFromJson(response.body).data;
-          Tools.stackTracer(StackTrace.current, "SuksesG total ${results.length}", response.statusCode);
+          List<GraphTotalResponse>? results = graphTotalParentResponseFromJson(response.body).data;
+          Tools.stackTracer(StackTrace.current, "SuksesG total ${results?.length}", response.statusCode);
           return results;
         } catch (e) {
           Tools.stackTracer(StackTrace.current, e.toString(), 500);
@@ -132,7 +133,7 @@ class GraphRepositoryImpl implements GraphRepository {
   }
 
   @override
-  Future<List<GraphYearResponse>> fetchGraphYearly(String year, String inverterId) async {
+  Future<List<GraphYearResponse>?> fetchGraphYearly(String year, String inverterId) async {
     var headers = {
       "Authorization" : await _getToken()
     };
@@ -150,8 +151,8 @@ class GraphRepositoryImpl implements GraphRepository {
     if (response.statusCode == 200) {
       if (response.body != null) {
         try {
-          List<GraphYearResponse> results = graphYearParentResponseFromJson(response.body).data;
-          Tools.stackTracer(StackTrace.current, "SuksesG yearly ${results.length}", response.statusCode);
+          List<GraphYearResponse>? results = graphYearParentResponseFromJson(response.body).data;
+          Tools.stackTracer(StackTrace.current, "SuksesG yearly ${results?.length}", response.statusCode);
           return results;
         } catch (e) {
           Tools.stackTracer(StackTrace.current, e.toString(), 500);

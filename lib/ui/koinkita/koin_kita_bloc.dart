@@ -8,7 +8,7 @@ import 'package:solar_kita/network/repository/koinkita_repository.dart';
 import 'package:solar_kita/ui/koinkita/koin_kita_event.dart';
 import 'package:solar_kita/ui/koinkita/koin_kita_state.dart';
 
-class KoinKitaBloc extends Bloc<KoinKitaEvent, KoinKitaState> {
+class KoinKitaBloc extends Bloc<KoinKitaEvent, KoinKitaState?> {
   KoinKitaRepository repository;
 
   KoinKitaBloc(this.repository) : super(null);
@@ -42,7 +42,7 @@ class KoinKitaBloc extends Bloc<KoinKitaEvent, KoinKitaState> {
       try {
         yield LoadingState();
         VoucherBannerResponse items = await repository.fetchVoucherBanner();
-        print("login sukses");
+        print("GetVoucherBanner sukses");
         yield VoucherBannerLoadedState(items: items);
       } catch (e) {
         print("get voucher banner error");

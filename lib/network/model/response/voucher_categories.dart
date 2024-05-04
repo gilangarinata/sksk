@@ -14,8 +14,8 @@ class VoucherCategoriesResponse {
     this.data,
   });
 
-  int status;
-  List<Datum> data;
+  int? status;
+  List<Datum>? data;
 
   factory VoucherCategoriesResponse.fromJson(Map<String, dynamic> json) => VoucherCategoriesResponse(
     status: json["status"],
@@ -24,7 +24,7 @@ class VoucherCategoriesResponse {
 
   Map<String, dynamic> toJson() => {
     "status": status,
-    "data": List<dynamic>.from(data.map((x) => x.toJson())),
+    "data": List<dynamic>.from(data!.map((x) => x.toJson())),
   };
 }
 
@@ -35,9 +35,9 @@ class Datum {
     this.icon,
   });
 
-  int id;
-  String name;
-  String icon;
+  int? id;
+  String? name;
+  String? icon;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
     id: json["id"],

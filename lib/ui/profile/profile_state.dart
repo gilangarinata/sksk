@@ -26,7 +26,7 @@ class SaveSuccess extends ProfileState {
 
 class ProfileLoaded extends ProfileState {
   final ProfileResponse items;
-  ProfileLoaded({@required this.items});
+  ProfileLoaded({required this.items});
   @override
   List<Object> get props => [items];
 }
@@ -39,7 +39,7 @@ class ChangePasswordSuccess extends ProfileState {
 
 class ServiceError extends ProfileState {
   final String message;
-  ServiceError({@required this.message});
+  ServiceError({required this.message});
   @override
   List<Object> get props => [message];
 }

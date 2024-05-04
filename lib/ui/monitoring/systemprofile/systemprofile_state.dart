@@ -6,21 +6,21 @@ abstract class SystemProfileState extends Equatable {}
 
 class SystemProfileLoaded extends SystemProfileState {
   final SystemProfileResponse items;
-  SystemProfileLoaded({@required this.items});
+  SystemProfileLoaded({required this.items});
   @override
   List<Object> get props => [items];
 }
 
 class SystemProfileDetailLoaded extends SystemProfileState {
   final SystemProfileResponse items;
-  SystemProfileDetailLoaded({@required this.items});
+  SystemProfileDetailLoaded({required this.items});
   @override
   List<Object> get props => [items];
 }
 
 class SystemProfileError extends SystemProfileState {
   final String message;
-  SystemProfileError({@required this.message});
+  SystemProfileError({required this.message});
   @override
   List<Object> get props => [message];
 }

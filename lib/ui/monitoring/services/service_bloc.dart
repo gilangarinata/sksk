@@ -6,7 +6,7 @@ import 'package:solar_kita/network/repository/service_repository.dart';
 import 'package:solar_kita/ui/monitoring/services/service_event.dart';
 import 'package:solar_kita/ui/monitoring/services/service_state.dart';
 
-class ServiceBloc extends Bloc<ServiceEvent, ServiceState> {
+class ServiceBloc extends Bloc<ServiceEvent, ServiceState?> {
   ServiceRepository repository;
 
   ServiceBloc(this.repository) : super(null);

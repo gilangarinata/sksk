@@ -8,12 +8,12 @@ import 'package:solar_kita/ui/koinkita/detailvouchers/DetailVoucherScreen.dart';
 import 'package:solar_kita/utils/tools.dart';
 
 class VoucherCardWidget extends StatelessWidget {
-  bool isRedeem;
-  Datum voucher;
+  bool? isRedeem;
+  Datum? voucher;
   String koin;
-  Function onSuccess;
+  Function? onSuccess;
 
-  VoucherCardWidget({this.isRedeem, this.voucher, this.koin, this.onSuccess});
+  VoucherCardWidget({required this.isRedeem, required this.voucher, required this.koin, required this.onSuccess});
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +22,10 @@ class VoucherCardWidget extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => DetailVoucherScreen(isRedeem, voucher),
+            builder: (context) => DetailVoucherScreen(isRedeem!, voucher),
           ),
         ).then((value) {
-          onSuccess(value);
+          onSuccess!(value);
         });
       },
       child: Card(
@@ -41,8 +41,8 @@ class VoucherCardWidget extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(15.0),
-                child: Image.network(voucher.image,height: 170,width: 170,fit: BoxFit.cover,
-                  errorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
+                child: Image.network(voucher?.image ?? "",height: 170,width: 170,fit: BoxFit.cover,
+                  errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
                     return Container(
                       width: 170,
                       height: 170,
@@ -65,13 +65,13 @@ class VoucherCardWidget extends StatelessWidget {
                         text: TextSpan(
                           style: TextStyle(
                               color: MyColors.accentDark, fontSize: 20.0, fontWeight: FontWeight.bold),
-                          text: voucher.name,
+                          text: voucher?.name,
                         ),
                       ),
                       SizedBox(height: 5,),
-                      MyText.myTextDescription2(voucher.merchantType, MyColors.grey_60),
+                      MyText.myTextDescription2(voucher?.merchantType ?? "", MyColors.grey_60),
                       SizedBox(height: 5,),
-                      MyText.myTextHeader3(voucher.koin.toString() + " Koin Kita", MyColors.accentDark),
+                      MyText.myTextHeader3(voucher?.koin.toString() ?? "" + " Koin Kita", MyColors.accentDark),
                       SizedBox(height: 5,),
                       Visibility(
                         visible: isRedeem != null,
@@ -80,9 +80,9 @@ class VoucherCardWidget extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => DetailVoucherScreen(isRedeem, voucher),
+                            builder: (context) => DetailVoucherScreen(isRedeem ?? false, voucher),
                           ),
-                        ).then((value) => onSuccess(201));
+                        ).then((value) => onSuccess!(201));
                       }),
                       )
 

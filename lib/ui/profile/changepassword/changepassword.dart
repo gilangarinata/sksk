@@ -41,13 +41,13 @@ class ChangePasswordScreenContent extends StatefulWidget {
 
 class _ChangePasswordScreenState extends State<ChangePasswordScreenContent> {
 
-  ProfileBloc bloc;
+  late ProfileBloc bloc;
 
   bool isLoading = false;
 
-  TextEditingController oldController;
-  TextEditingController newController;
-  TextEditingController newController2;
+  late TextEditingController oldController;
+  late TextEditingController newController;
+  late TextEditingController newController2;
 
   @override
   void initState() {
@@ -60,7 +60,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreenContent> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<ProfileBloc,ProfileState>(
+    return BlocListener<ProfileBloc,ProfileState?>(
         listener: (context, state) async {
           if (state is LoadingState) {
             setState(() {
@@ -110,7 +110,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreenContent> {
                 style: MyFieldStyle.myFieldStylePrimary(),
                 keyboardType: TextInputType.text,
                 validator: (value) {
-                  if (value.isEmpty) {
+                  if (value?.isEmpty == true) {
                     return MyStrings.mustNotEmpty;
                   }
                   return null;
@@ -130,7 +130,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreenContent> {
                 style: MyFieldStyle.myFieldStylePrimary(),
                 keyboardType: TextInputType.text,
                 validator: (value) {
-                  if (value.isEmpty) {
+                  if (value?.isEmpty == true) {
                     return MyStrings.mustNotEmpty;
                   }
                   return null;
@@ -150,7 +150,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreenContent> {
                 style: MyFieldStyle.myFieldStylePrimary(),
                 keyboardType: TextInputType.text,
                 validator: (value) {
-                  if (value.isEmpty) {
+                  if (value?.isEmpty == true) {
                     return MyStrings.mustNotEmpty;
                   }
                   return null;

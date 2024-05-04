@@ -22,7 +22,7 @@ class NotificationScreen extends StatelessWidget {
   Function(int) itemClick;
 
 
-  NotificationScreen({this.itemClick});
+  NotificationScreen({required this.itemClick});
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +52,7 @@ class NotificationScreenContent extends StatefulWidget {
 class _NotificationScreenState extends State<NotificationScreenContent> {
 
 
-  ServiceBloc bloc;
+  late ServiceBloc bloc;
 
 
   @override
@@ -64,7 +64,7 @@ class _NotificationScreenState extends State<NotificationScreenContent> {
 
   List<Widget> generateNotif(){
     if(_notificationModel != null){
-      List<Widget> wd = _notificationModel.data.take(5).map((e) => Card(
+      List<Widget> wd = _notificationModel!.data!.take(5).map((e) => Card(
         elevation: 2,
         child: Container(
           padding: EdgeInsets.all(20),
@@ -100,7 +100,7 @@ class _NotificationScreenState extends State<NotificationScreenContent> {
               InkWell(
                   onTap: () async{
                     SharedPreferences prefs = await SharedPreferences.getInstance();
-                    bool isDemo = prefs.getBool(PrefData.IS_DEMO);
+                    bool isDemo = prefs.getBool(PrefData.IS_DEMO) ?? false;
 
                     if(isDemo){
                       MySnackbar.showToast("Not Available. You are using demo account.");
@@ -116,7 +116,9 @@ class _NotificationScreenState extends State<NotificationScreenContent> {
       wd.add(Card(
         child: InkWell(
           onTap: (){
-            Tools.addScreen(context, NotificationDetailScreen());
+            Tools.addScreen(context, NotificationDetailScreen(itemClick: (i){
+
+            },));
           },
           child: Container(
             width: double.infinity,
@@ -135,11 +137,11 @@ class _NotificationScreenState extends State<NotificationScreenContent> {
   }
 
   bool _isLoading = false;
-  NotificationResponse _notificationModel;
+  NotificationResponse? _notificationModel;
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<ServiceBloc,ServiceState>(
+    return BlocListener<ServiceBloc,ServiceState?>(
         listener: (context, state) async {
           if (state is LoadingState) {
             setState(() {

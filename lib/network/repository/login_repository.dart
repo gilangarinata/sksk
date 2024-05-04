@@ -26,7 +26,7 @@ class LoginRepositoryImpl implements LoginRepository {
   Future<LoginResponse> processLogin(String username, String password) async {
     final body = {
       'grant_type': 'password',
-      'client_id': '2',
+      'client_id': Keys.CLIENT_ID,
       'client_secret': Keys.CLIENT_SCREET,
       'username': username,
       'password': password,
@@ -41,7 +41,7 @@ class LoginRepositoryImpl implements LoginRepository {
       if (response.body != null) {
         try {
           LoginResponse results = loginResponseFromJson(response.body);
-          _saveToken(results.accessToken);
+          _saveToken(results.accessToken ?? "");
           Tools.stackTracer(StackTrace.current, "Sukses", response.statusCode);
           return results;
         } catch (e) {

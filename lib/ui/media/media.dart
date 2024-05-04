@@ -10,7 +10,7 @@ class MediaScreen extends StatefulWidget {
 }
 
 class _MediaScreenState extends State<MediaScreen> {
-  Size size;
+  late Size size;
   bool isLoading = true;
 
   @override

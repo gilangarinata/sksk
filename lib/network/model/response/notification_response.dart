@@ -14,8 +14,8 @@ class NotificationResponse {
     this.data,
   });
 
-  int status;
-  List<Datum> data;
+  int? status;
+  List<Datum>? data;
 
   factory NotificationResponse.fromJson(Map<String, dynamic> json) => NotificationResponse(
     status: json["status"],
@@ -24,7 +24,7 @@ class NotificationResponse {
 
   Map<String, dynamic> toJson() => {
     "status": status,
-    "data": List<dynamic>.from(data.map((x) => x.toJson())),
+    "data": List<dynamic>.from(data!.map((x) => x.toJson())),
   };
 }
 
@@ -36,10 +36,10 @@ class Datum {
     this.redirectUrl,
   });
 
-  int id;
-  String name;
-  String description;
-  String redirectUrl;
+  int? id;
+  String? name;
+  String? description;
+  String? redirectUrl;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
     id: json["id"],

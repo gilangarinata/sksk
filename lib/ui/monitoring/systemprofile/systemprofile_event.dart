@@ -8,18 +8,24 @@ import 'package:solar_kita/network/model/response/graph_year_response.dart';
 abstract class SystemProfileEvent extends Equatable {}
 
 class FetchSystemProfile extends SystemProfileEvent {
-  @override
-  List<Object> get props => null;
+
   FetchSystemProfile();
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
 }
 
 class FetchSystemProfileDetail extends SystemProfileEvent {
   String id;
   String month;
   String year;
-  @override
-  List<Object> get props => null;
+
   FetchSystemProfileDetail(this.id,this.month,this.year);
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
 }
 
 

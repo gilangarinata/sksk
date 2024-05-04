@@ -18,7 +18,7 @@ class ChartView extends StatefulWidget {
 
 class _ChartViewState extends State<ChartView> {
 
-  bool isShowingMainData;
+  late bool isShowingMainData;
   List<GraphDayResponse> items;
 
   _ChartViewState(this.items);
@@ -36,7 +36,7 @@ class _ChartViewState extends State<ChartView> {
       for (int i = 0; i < items.length; i++) {
         var hour = items[i].timeI;
         var power = items[i].power;
-        points.add(FlSpot(i.toDouble(), power));
+        points.add(FlSpot(i.toDouble(), power ?? 0.0));
       }
     }
     print(points);
@@ -104,7 +104,7 @@ class _ChartViewState extends State<ChartView> {
     MyColors.accentDark,
   ];
   
-  String getTime(double value){
+  String? getTime(double value){
     if(items != null){
       if(value.toInt() % 4 == 0){
         return items[value.toInt()].timeI;
@@ -116,7 +116,7 @@ class _ChartViewState extends State<ChartView> {
     }
   }
 
-  String getTimeDetail(double value){
+  String? getTimeDetail(double value){
     if(items != null){
       return items[value.toInt()].timeI;
     }else{
@@ -166,7 +166,7 @@ class _ChartViewState extends State<ChartView> {
           ),
           margin: 10,
           getTitles: (value) {
-            return getTime(value);
+            return getTime(value) ?? "";
           },
         ),
         leftTitles: SideTitles(
@@ -190,13 +190,17 @@ class _ChartViewState extends State<ChartView> {
   }
 
   double getMaxItemY(){
-    if(items != null){
-      GraphDayResponse max = items.first;
-      items.forEach((e) {
-        if (e.power > max.power) max = e;
-      });
-    return max.power.toDouble() + (max.power.toDouble() * 50.0 / 100.0) ;
-    }else{
+    try {
+      if(items != null){
+        GraphDayResponse max = items.first;
+        items.forEach((e) {
+          if ((e.power ?? 0.0) > (max.power ?? 0.0)) max = e;
+        });
+        return (max.power?.toDouble() ?? 0.0) + ((max.power?.toDouble() ?? 0.0) * 50.0 / 100.0) ;
+      }else{
+        return 0.0;
+      }
+    } catch(e) {
       return 0.0;
     }
   }

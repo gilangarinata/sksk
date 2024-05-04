@@ -76,12 +76,12 @@ class DetailSolarSystemChild extends StatefulWidget {
 }
 
 class _DetailSolarSystemState extends State<DetailSolarSystemChild> {
-  ChartBloc chartBloc;
-  SystemProfileBloc systemProfileBloc;
+  late ChartBloc chartBloc;
+  late SystemProfileBloc systemProfileBloc;
 
-  List<bool> tabChartSelected = [false, false, false, false];
-  GlobalKey globalKey = GlobalKey();
-  bool chartLoading = true;
+  late List<bool> tabChartSelected = [false, false, false, false];
+  late GlobalKey globalKey = GlobalKey();
+  late bool chartLoading = true;
 
   String inverterId;
   _DetailSolarSystemState(this.inverterId);
@@ -176,15 +176,15 @@ class _DetailSolarSystemState extends State<DetailSolarSystemChild> {
     processDate();
   }
 
-  String _currentSelectedYear;
-  String _currentSelectedMonth;
-  String _currentSelectedDay;
+  late  String _currentSelectedYear;
+  late  String _currentSelectedMonth;
+  late String _currentSelectedDay;
   bool _isLoading = true;
   List<GraphDayResponse> dailyGraphResponse = [];
   List<GraphMonthResponse> monthlyGraphResponse = [];
   List<GraphYearResponse> yearlyGraphResponse = [];
   List<GraphTotalResponse> totalGraphResponse= [];
-  SystemProfileResponse systemDataResponse;
+  late SystemProfileResponse systemDataResponse;
 
   void processDate(){
     if(_currentSelectedDay != null && _currentSelectedMonth != null && _currentSelectedYear != null){
@@ -211,30 +211,29 @@ class _DetailSolarSystemState extends State<DetailSolarSystemChild> {
   }
 
   Future<void> _capturePng() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool isDemo = prefs.getBool(PrefData.IS_DEMO);
-
-    if(isDemo){
-      MySnackbar.showToast("Not Available. You are using demo account.");
-      return;
-    }
-
-    RenderRepaintBoundary boundary =
-    globalKey.currentContext.findRenderObject();
-    ui.Image image = await boundary.toImage();
-    ByteData byteData = await image.toByteData(format:       ui.ImageByteFormat.png);
-    Uint8List capturedBytes = byteData.buffer.asUint8List();
-
-    try {
-
-      final tempDir = await getTemporaryDirectory();
-      final file = await new File('${tempDir.path}/image.jpg').create();
-      file.writeAsBytesSync(capturedBytes);
-
-      Share.shareFiles(['${tempDir.path}/image.jpg'], text: '');
-    } catch (e) {
-      print('Share error: $e');
-    }
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // bool isDemo = prefs.getBool(PrefData.IS_DEMO) ?? false;
+    //
+    // if(isDemo){
+    //   MySnackbar.showToast("Not Available. You are using demo account.");
+    //   return;
+    // }
+    //
+    // RenderObject? boundary = globalKey.currentContext?.findRenderObject();
+    // ui.Image image = await boundary?.toImage();
+    // ByteData? byteData = await image.toByteData(format:       ui.ImageByteFormat.png);
+    // Uint8List? capturedBytes = byteData?.buffer.asUint8List();
+    //
+    // try {
+    //
+    //   final tempDir = await getTemporaryDirectory();
+    //   final file = await new File('${tempDir.path}/image.jpg').create();
+    //   file.writeAsBytesSync(capturedBytes as List<int>);
+    //
+    //   Share.shareFiles(['${tempDir.path}/image.jpg'], text: '');
+    // } catch (e) {
+    //   print('Share error: $e');
+    // }
   }
 
   @override
@@ -249,7 +248,7 @@ class _DetailSolarSystemState extends State<DetailSolarSystemChild> {
         centerTitle: true,
         title: MyText.myTextHeader2("Inverter : " + inverterId, MyColors.accentDark),
       ),
-      body : BlocListener<SystemProfileBloc, SystemProfileState>(
+      body : BlocListener<SystemProfileBloc, SystemProfileState?>(
         listener: (context, state) async {
           if (state is SystemProfileError) {
             setState(() {
@@ -263,7 +262,7 @@ class _DetailSolarSystemState extends State<DetailSolarSystemChild> {
             });
           }
         },
-        child: BlocListener<ChartBloc, ChartState>(
+        child: BlocListener<ChartBloc, ChartState?>(
           listener: (context, state) async {
             if (state is InitialState) {
 
@@ -328,7 +327,7 @@ class _DetailSolarSystemState extends State<DetailSolarSystemChild> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              MyText.bigText(systemDataResponse != null ? systemDataResponse.data.todayProduction : 0, MyColors.accentDark),
+                              MyText.bigText(systemDataResponse != null ? systemDataResponse.data!.todayProduction.toString() : "0", MyColors.accentDark),
                               MyText.myTextDescription(
                                   MyStrings.kwh, MyColors.accentDark)
                             ],
@@ -359,7 +358,7 @@ class _DetailSolarSystemState extends State<DetailSolarSystemChild> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    MyText.bigText(systemDataResponse != null ? systemDataResponse.data.monthlyEnergy : "-", MyColors.accentDark),
+                                    MyText.bigText(systemDataResponse != null ? systemDataResponse.data!.monthlyEnergy.toString() : "-", MyColors.accentDark),
                                     MyText.myTextDescription(
                                         MyStrings.kwh, MyColors.accentDark)
                                   ],
@@ -391,7 +390,7 @@ class _DetailSolarSystemState extends State<DetailSolarSystemChild> {
                                   children: [
                                     MyText.myTextDescription(
                                         MyStrings.rp, MyColors.accentDark),
-                                    MyText.bigText(systemDataResponse != null ? systemDataResponse.data.monthlySaving : "-", MyColors.accentDark),
+                                    MyText.bigText(systemDataResponse != null ? systemDataResponse.data!.monthlySaving.toString() : "-", MyColors.accentDark),
                                   ],
                                 ),
                               ],
@@ -409,7 +408,7 @@ class _DetailSolarSystemState extends State<DetailSolarSystemChild> {
                         border: Border.all(color: MyColors.accentDark, width: 2)),
                     child: Center(
                         child: MyText.myTextHeader2(
-                            "CO2 Reduced = " + (systemDataResponse != null ? systemDataResponse.data.co2Reduced : 0).toString() + "kg", MyColors.accentDark)),
+                            "CO2 Reduced = " + (systemDataResponse != null ? systemDataResponse.data!.co2Reduced.toString() : 0).toString() + "kg", MyColors.accentDark)),
                   ),
                   Card(
                     shape: RoundedRectangleBorder(
@@ -431,7 +430,7 @@ class _DetailSolarSystemState extends State<DetailSolarSystemChild> {
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
-                                        MyText.myTextHeader1(systemDataResponse != null ? systemDataResponse.data.totalEnergy : "-", MyColors.accentDark),
+                                        MyText.myTextHeader1(systemDataResponse != null ? systemDataResponse.data!.totalEnergy.toString() : "-", MyColors.accentDark),
                                         SizedBox(width: 5,),
                                         MyText.myTextDescription2(MyStrings.kwh, MyColors.accentDark)
                                       ],
@@ -467,7 +466,7 @@ class _DetailSolarSystemState extends State<DetailSolarSystemChild> {
                                               width: 5,
                                             ),
                                             MyText.myTextHeader1(
-                                                systemDataResponse != null ? systemDataResponse.data.totalSaving : "-", MyColors.accentDark),
+                                                systemDataResponse != null ? systemDataResponse.data!.totalSaving.toString() : "-", MyColors.accentDark),
                                           ],
                                         )
                                       ],
@@ -484,7 +483,7 @@ class _DetailSolarSystemState extends State<DetailSolarSystemChild> {
                     10,
                         () async{
                           SharedPreferences prefs = await SharedPreferences.getInstance();
-                          bool isDemo = prefs.getBool(PrefData.IS_DEMO);
+                          bool isDemo = prefs.getBool(PrefData.IS_DEMO) ?? false;
 
                           if(isDemo){
                             MySnackbar.showToast("Not Available. You are using demo account.");
@@ -666,7 +665,7 @@ class _DetailSolarSystemState extends State<DetailSolarSystemChild> {
                   SizedBox(
                     height: 10,
                   ),
-                  SolarSystemProfile(systemDataResponse != null ? systemDataResponse.data.solarSystemProfile : null)
+                  SolarSystemProfile(systemDataResponse != null ? systemDataResponse.data?.solarSystemProfile : null)
                 ],
               ),
             ),
@@ -715,9 +714,9 @@ class _DetailSolarSystemState extends State<DetailSolarSystemChild> {
                   child: DropdownButton<String>(
                     value: _currentSelectedYear,
                     isDense: true,
-                    onChanged: (String newValue) {
+                    onChanged: (String? newValue) {
                       setState(() {
-                        _currentSelectedYear = newValue;
+                        _currentSelectedYear = newValue ?? "";
                         state.didChange(newValue);
                         processDate();
                       });
@@ -762,9 +761,9 @@ class _DetailSolarSystemState extends State<DetailSolarSystemChild> {
                   child: DropdownButton<String>(
                     value: _currentSelectedMonth,
                     isDense: true,
-                    onChanged: (String newValue) {
+                    onChanged: (String? newValue) {
                       setState(() {
-                        _currentSelectedMonth = newValue;
+                        _currentSelectedMonth = newValue ?? "";
                         state.didChange(newValue);
                         processDate();
                       });
@@ -809,9 +808,9 @@ class _DetailSolarSystemState extends State<DetailSolarSystemChild> {
                   child: DropdownButton<String>(
                     value: _currentSelectedDay,
                     isDense: true,
-                    onChanged: (String newValue) {
+                    onChanged: (String? newValue) {
                       setState(() {
-                        _currentSelectedDay = newValue;
+                        _currentSelectedDay = newValue ?? "";
                         state.didChange(newValue);
                         processDate();
                       });
@@ -863,9 +862,9 @@ class _DetailSolarSystemState extends State<DetailSolarSystemChild> {
                   child: DropdownButton<String>(
                     value: _currentSelectedYear,
                     isDense: true,
-                    onChanged: (String newValue) {
+                    onChanged: (String? newValue) {
                       setState(() {
-                        _currentSelectedYear = newValue;
+                        _currentSelectedYear = newValue ?? "";
                         state.didChange(newValue);
                         processDate();
                       });
@@ -910,9 +909,9 @@ class _DetailSolarSystemState extends State<DetailSolarSystemChild> {
                   child: DropdownButton<String>(
                     value: _currentSelectedMonth,
                     isDense: true,
-                    onChanged: (String newValue) {
+                    onChanged: (String? newValue) {
                       setState(() {
-                        _currentSelectedMonth = newValue;
+                        _currentSelectedMonth = newValue ?? "";
                         state.didChange(newValue);
                         processDate();
                       });
@@ -964,9 +963,9 @@ class _DetailSolarSystemState extends State<DetailSolarSystemChild> {
                   child: DropdownButton<String>(
                     value: _currentSelectedYear,
                     isDense: true,
-                    onChanged: (String newValue) {
+                    onChanged: (String? newValue) {
                       setState(() {
-                        _currentSelectedYear = newValue;
+                        _currentSelectedYear = newValue ?? "";
                         state.didChange(newValue);
                         processDate();
                       });

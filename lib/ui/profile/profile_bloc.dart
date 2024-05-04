@@ -8,7 +8,7 @@ import 'package:solar_kita/ui/profile/profile_event.dart';
 import 'package:solar_kita/ui/profile/profile_state.dart';
 
 
-class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
+class ProfileBloc extends Bloc<ProfileEvent, ProfileState?> {
   ProfileRepository repository;
 
   ProfileBloc(this.repository) : super(null);

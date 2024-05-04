@@ -7,16 +7,16 @@ import 'package:solar_kita/res/my_text.dart';
 
 class ActivitiesView extends StatelessWidget {
 
-  HelpCenterListResponse _helpCenterListResponse;
+  HelpCenterListResponse? _helpCenterListResponse;
 
 
   ActivitiesView(this._helpCenterListResponse);
 
 
   Widget getList(Datum data, int number){
-    var formattedDate = DateFormat("dd-MM-yyyy HH:mm").format(data.createdAt);
+    var formattedDate = DateFormat("dd-MM-yyyy HH:mm").format(data.createdAt ?? DateTime.now());
     if(data.date != null && data.time != null){
-      var date = data.date.substring(0,10);
+      var date = data.date?.substring(0,10);
       var time = data.time;
       formattedDate = "$date $time";
     }
@@ -39,8 +39,8 @@ class ActivitiesView extends StatelessWidget {
   List<Widget> getDatas(){
     List<Widget> list = [];
     if(_helpCenterListResponse != null) {
-      for (int i = 0; i < _helpCenterListResponse.data.length; i++) {
-        list.add(getList(_helpCenterListResponse.data[i], i + 1));
+      for (int i = 0; i < (_helpCenterListResponse?.data?.length ?? 0); i++) {
+        list.add(getList(_helpCenterListResponse!.data![i], i + 1));
       }
     }
     return list;

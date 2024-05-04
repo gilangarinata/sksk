@@ -14,8 +14,8 @@ class ProfileResponse {
     this.data,
   });
 
-  int status;
-  Data data;
+  int? status;
+  Data? data;
 
   factory ProfileResponse.fromJson(Map<String, dynamic> json) => ProfileResponse(
     status: json["status"],
@@ -24,7 +24,7 @@ class ProfileResponse {
 
   Map<String, dynamic> toJson() => {
     "status": status,
-    "data": data.toJson(),
+    "data": data?.toJson(),
   };
 }
 
@@ -35,9 +35,9 @@ class Data {
     this.email,
   });
 
-  String name;
-  String company;
-  String email;
+  String? name;
+  String? company;
+  String? email;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
     name: json["name"],

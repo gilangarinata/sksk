@@ -6,7 +6,7 @@ import 'package:solar_kita/res/my_colors.dart';
 
 class BarChartYearly extends StatefulWidget {
   List<GraphYearResponse> graphYearResponse;
-  BarChartYearly({this.graphYearResponse});
+  BarChartYearly({required this.graphYearResponse});
 
   @override
   State<StatefulWidget> createState() => BarChartYearlyState(graphYearResponse);
@@ -16,8 +16,8 @@ class BarChartYearlyState extends State<BarChartYearly> {
   final Color leftBarColor = MyColors.accentDark;
   final double width = 15;
 
-  List<BarChartGroupData> rawBarGroups;
-  List<BarChartGroupData> showingBarGroups;
+  late List<BarChartGroupData> rawBarGroups;
+  late List<BarChartGroupData> showingBarGroups;
 
   int touchedGroupIndex = -1;
 
@@ -112,7 +112,7 @@ class BarChartYearlyState extends State<BarChartYearly> {
                         margin: 20,
                         getTitles: (double value) {
                           var dateI = graphYearResponse[value.toInt()].monthI;
-                          return dateI.substring(0,3);
+                          return dateI?.substring(0,3) ?? "";
                         },
                       ),
                       leftTitles: SideTitles(

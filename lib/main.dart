@@ -59,8 +59,8 @@ class MyApp extends StatelessWidget {
       current.then((value) {
         print("gilang2 : " + value.length.toString());
         value.add(NotificationModel(1, event.notification.title,
-            event.notification.body, event.notification.additionalData["url"],
-          event.notification.additionalData["image"]));
+            event.notification.body, event.notification.additionalData?["url"],
+          event.notification.additionalData?["image"]));
         saveNotif(value);
       });
 
@@ -78,7 +78,7 @@ class MyApp extends StatelessWidget {
     });
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(primaryColor: MyColors.accentDark, accentColor: MyColors.accentDark),
+      theme: ThemeData(primaryColor: MyColors.accentDark),
       home: SplashScreen(),
     );
   }

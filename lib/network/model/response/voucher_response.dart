@@ -14,8 +14,8 @@ class VoucherResponse {
     this.data,
   });
 
-  int status;
-  List<Datum> data;
+  int? status;
+  List<Datum>? data;
 
   factory VoucherResponse.fromJson(Map<String, dynamic> json) => VoucherResponse(
     status: json["status"],
@@ -24,7 +24,7 @@ class VoucherResponse {
 
   Map<String, dynamic> toJson() => {
     "status": status,
-    "data": List<dynamic>.from(data.map((x) => x.toJson())),
+    "data": List<dynamic>.from(data!.map((x) => x.toJson())),
   };
 }
 
@@ -45,19 +45,19 @@ class Datum {
     this.caraRedeem,
   });
 
-  int id;
-  String code;
-  String merchantName;
-  String merchantType;
-  String merchantContact;
-  int koin;
-  String name;
-  String description;
-  String image;
-  DateTime startDate;
-  DateTime endDate;
-  String syarat;
-  String caraRedeem;
+  int? id;
+  String? code;
+  String? merchantName;
+  String? merchantType;
+  String? merchantContact;
+  int? koin;
+  String? name;
+  String? description;
+  String? image;
+  DateTime? startDate;
+  DateTime? endDate;
+  String? syarat;
+  String? caraRedeem;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
     id: json["id"],
@@ -85,8 +85,8 @@ class Datum {
     "name": name,
     "description": description,
     "image": image,
-    "start_date": "${startDate.year.toString().padLeft(4, '0')}-${startDate.month.toString().padLeft(2, '0')}-${startDate.day.toString().padLeft(2, '0')}",
-    "end_date": "${endDate.year.toString().padLeft(4, '0')}-${endDate.month.toString().padLeft(2, '0')}-${endDate.day.toString().padLeft(2, '0')}",
+    "start_date": "${startDate?.year.toString().padLeft(4, '0')}-${startDate?.month.toString().padLeft(2, '0')}-${startDate?.day.toString().padLeft(2, '0')}",
+    "end_date": "${endDate?.year.toString().padLeft(4, '0')}-${endDate?.month.toString().padLeft(2, '0')}-${endDate?.day.toString().padLeft(2, '0')}",
     "syarat": syarat,
     "cara_redeem": caraRedeem,
   };

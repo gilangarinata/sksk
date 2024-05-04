@@ -24,7 +24,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   int page = 0;
   bool isLast = false;
   String textNext = "Next";
-  Size size;
+  late Size size;
 
   @override
   Widget build(BuildContext context) {
@@ -105,11 +105,11 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                     Column(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
-                        Image.asset(wz.image, width: size.width / 2),
-                        MyText.myTextHeader1(wz.title, MyColors.accentDark),
+                        Image.asset(wz.image ?? "", width: size.width / 2),
+                        MyText.myTextHeader1(wz.title ?? "", MyColors.accentDark),
                         Container(
                           margin: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
-                          child: Text(wz.brief, textAlign : TextAlign.center, style: MyText.subhead(context).copyWith(
+                          child: Text(wz.brief ?? "", textAlign : TextAlign.center, style: MyText.subhead(context)?.copyWith(
                               color: MyColors.grey_60
                           )),
                         ),

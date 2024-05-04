@@ -18,7 +18,7 @@ class ChartViewDailyDetail extends StatefulWidget {
 
 class _ChartViewState extends State<ChartViewDailyDetail> {
 
-  bool isShowingMainData;
+  late bool isShowingMainData;
   List<GraphDayResponse> items;
 
   _ChartViewState(this.items);
@@ -35,7 +35,7 @@ class _ChartViewState extends State<ChartViewDailyDetail> {
       for (int i = 0; i < items.length; i++) {
         var hour = items[i].timeI;
         var power = items[i].power;
-        points.add(FlSpot(i.toDouble(), power));
+        points.add(FlSpot(i.toDouble(), power ?? 0.0));
       }
     }
     print(points);
@@ -123,7 +123,7 @@ class _ChartViewState extends State<ChartViewDailyDetail> {
     );
   }
 
-  String getTimeDetail(double value){
+  String? getTimeDetail(double value){
     if(items != null){
       return items[value.toInt()].timeI;
     }else{
@@ -165,9 +165,9 @@ class _ChartViewState extends State<ChartViewDailyDetail> {
           getTitles: (value) {
             if(items != null){
               if(value.toInt() % 4 == 0){
-                return items[value.toInt()].timeI;
+                return items[value.toInt()].timeI ?? "";
               }else{
-                return null;
+                return "";
               }
             }else{
               return '';
@@ -198,9 +198,9 @@ class _ChartViewState extends State<ChartViewDailyDetail> {
     if(items != null){
       GraphDayResponse max = items.first;
       items.forEach((e) {
-        if (e.power > max.power) max = e;
+        if ((e.power ?? 0.0) > (max.power ?? 0.0)) max = e;
       });
-    return max.power.toDouble() + (max.power.toDouble() * 50 / 100);
+    return (max.power?.toDouble() ?? 0.0) + ((max.power?.toDouble() ?? 0.0) * 50 / 100);
     }else{
       return 0.0;
     }

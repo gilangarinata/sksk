@@ -10,8 +10,8 @@ String graphMonthParentResponseToJson(GraphMonthParentResponse data) => json.enc
 
 class GraphMonthParentResponse {
   GraphMonthParentResponse({
-    this.status,
-    this.data,
+    required this.status,
+    required this.data,
   });
 
   int status;
@@ -41,13 +41,13 @@ class GraphMonthResponse {
   });
 
   dynamic timeStamp;
-  String serial;
+  String? serial;
   dynamic totalYield;
   dynamic dayYield;
-  String dateI;
-  TimeI timeI;
+  String? dateI;
+  TimeI? timeI;
   dynamic dayHour;
-  String powerMax;
+  String? powerMax;
 
   factory GraphMonthResponse.fromJson(Map<String, dynamic> json) => GraphMonthResponse(
     timeStamp: json["TimeStamp"],
@@ -55,7 +55,7 @@ class GraphMonthResponse {
     totalYield: json["TotalYield"],
     dayYield: json["DayYield"],
     dateI: json["DateI"],
-    timeI: timeIValues.map[json["TimeI"]],
+    timeI: timeIValues.map?[json["TimeI"]],
     dayHour: json["DayHour"],
     powerMax: json["PowerMax"] == null ? null : json["PowerMax"],
   );
@@ -66,7 +66,7 @@ class GraphMonthResponse {
     "TotalYield": totalYield,
     "DayYield": dayYield,
     "DateI": dateI,
-    "TimeI": timeIValues.reverse[timeI],
+    "TimeI": timeIValues.reverse?[timeI],
     "DayHour": dayHour,
     "PowerMax": powerMax == null ? null : powerMax,
   };
@@ -79,14 +79,14 @@ final timeIValues = EnumValues({
 });
 
 class EnumValues<T> {
-  Map<String, T> map;
-  Map<T, String> reverseMap;
+  Map<String, T>? map;
+  Map<T, String>? reverseMap;
 
   EnumValues(this.map);
 
-  Map<T, String> get reverse {
+  Map<T, String>? get reverse {
     if (reverseMap == null) {
-      reverseMap = map.map((k, v) => new MapEntry(v, k));
+      reverseMap = map?.map((k, v) => new MapEntry(v, k));
     }
     return reverseMap;
   }

@@ -10,7 +10,7 @@ class TermAndConditionScreen extends StatefulWidget {
 }
 
 class _TermAndConditionScreenState extends State<TermAndConditionScreen> {
-  Size size;
+  Size? size;
   bool isLoading = true;
 
   @override

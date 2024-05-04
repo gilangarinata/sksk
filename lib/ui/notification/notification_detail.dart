@@ -20,7 +20,7 @@ class NotificationDetailScreen extends StatelessWidget {
   Function(int) itemClick;
 
 
-  NotificationDetailScreen({this.itemClick});
+  NotificationDetailScreen({required this.itemClick});
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +50,7 @@ class NotificationScreenContent extends StatefulWidget {
 class _NotificationScreenState extends State<NotificationScreenContent> {
 
 
-  ServiceBloc bloc;
+  late ServiceBloc bloc;
 
 
   @override
@@ -62,7 +62,7 @@ class _NotificationScreenState extends State<NotificationScreenContent> {
 
   List<Widget> generateNotif(){
     if(_notificationModel != null){
-      return _notificationModel.data.map((e) => Card(
+      return _notificationModel!.data!.map((e) => Card(
         elevation: 2,
         child: Container(
           padding: EdgeInsets.all(20),
@@ -111,11 +111,11 @@ class _NotificationScreenState extends State<NotificationScreenContent> {
   }
 
   bool _isLoading = false;
-  NotificationResponse _notificationModel;
+  NotificationResponse? _notificationModel;
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<ServiceBloc,ServiceState>(
+    return BlocListener<ServiceBloc,ServiceState?>(
         listener: (context, state) async {
           if (state is LoadingState) {
             setState(() {

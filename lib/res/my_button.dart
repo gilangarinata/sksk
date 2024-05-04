@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:solar_kita/res/my_colors.dart';
 
 class MyButton {
-  static ElevatedButton myPrimaryButton(String title, Function onPressed) {
+  static ElevatedButton myPrimaryButton(String title, VoidCallback onPressed) {
     // return ElevatedButton(
     //   shape: RoundedRectangleBorder(
     //       borderRadius: BorderRadius.circular(20.0),
@@ -18,10 +18,10 @@ class MyButton {
         style: ElevatedButton.styleFrom(
           backgroundColor: MyColors.accentDark
         ),
-        child: Text(title, style: TextStyle(fontSize: 14)));
+        child: Text(title, style: TextStyle(fontSize: 14, color: Colors.white)));
   }
 
-  static ElevatedButton myNegativeButton(String title, Function onPressed) {
+  static ElevatedButton myNegativeButton(String title, VoidCallback onPressed) {
     // return RaisedButton(
     //   shape: RoundedRectangleBorder(
     //       borderRadius: BorderRadius.circular(20.0),
@@ -41,7 +41,7 @@ class MyButton {
     );
   }
 
-  static ElevatedButton myBorderButton(String title, double cornerRadius, Function onPressed) {
+  static ElevatedButton myBorderButton(String title, double cornerRadius, VoidCallback onPressed) {
     // return RaisedButton(
     //   shape: RoundedRectangleBorder(
     //       borderRadius: BorderRadius.circular(cornerRadius),
@@ -57,17 +57,17 @@ class MyButton {
           backgroundColor: MyColors.accentDark
       ),
       onPressed: onPressed,
-      child: Text(title, style: TextStyle(fontSize: 14)),
+      child: Text(title, style: TextStyle(fontSize: 14, color: Colors.white)),
     );
   }
 
-  static ElevatedButton myBorderTransparentButton(String title, double cornerRadius, Function onPressed) {
+  static ElevatedButton myBorderTransparentButton(String title, double cornerRadius, VoidCallback onPressed) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
           backgroundColor: MyColors.accentDark
       ),
       onPressed: onPressed,
-      child: Text(title, style: TextStyle(fontSize: 14)),
+      child: Text(title, style: TextStyle(fontSize: 14, color: Colors.white)),
     );
     // return RaisedButton(
     //   shape: RoundedRectangleBorder(

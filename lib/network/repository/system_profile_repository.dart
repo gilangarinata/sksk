@@ -16,8 +16,8 @@ import 'package:solar_kita/ui/login/login_screen.dart';
 import 'package:solar_kita/utils/tools.dart';
 
 abstract class SystemProfileRepository {
-  Future<SystemProfileResponse> getSystemProfile();
-  Future<SystemProfileResponse> getSystemProfileDetail(String id, String month, String year);
+  Future<SystemProfileResponse?> getSystemProfile();
+  Future<SystemProfileResponse?> getSystemProfileDetail(String id, String month, String year);
 }
 
 class SystemProfileRepositoryImpl implements SystemProfileRepository {
@@ -28,7 +28,7 @@ class SystemProfileRepositoryImpl implements SystemProfileRepository {
 
   Future<String> _getToken() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return "Bearer " + prefs.getString(PrefData.TOKEN);
+    return "Bearer ${prefs.getString(PrefData.TOKEN)}";
   }
 
   Future<void> _clearPreferences() async{
@@ -42,7 +42,7 @@ class SystemProfileRepositoryImpl implements SystemProfileRepository {
   }
 
   @override
-  Future<SystemProfileResponse> getSystemProfile() async {
+  Future<SystemProfileResponse?> getSystemProfile() async {
     var token = await _getToken();
     var headers = {
       "Authorization" : token
@@ -85,7 +85,7 @@ class SystemProfileRepositoryImpl implements SystemProfileRepository {
   }
 
   @override
-  Future<SystemProfileResponse> getSystemProfileDetail(String id, String month, String year) async {
+  Future<SystemProfileResponse?> getSystemProfileDetail(String id, String month, String year) async {
     var token = await _getToken();
     var headers = {
       "Authorization" : token

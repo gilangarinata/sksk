@@ -4,13 +4,15 @@ abstract class KoinKitaEvent extends Equatable {}
 
 class GetKoin extends KoinKitaEvent {
   @override
-  List<Object> get props => null;
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
   GetKoin();
 }
 
 class GetVouchers extends KoinKitaEvent {
   @override
-  List<Object> get props => null;
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
   GetVouchers();
 }
 
@@ -20,14 +22,16 @@ class GetVouchersCategoriesDetail extends KoinKitaEvent {
   String title;
 
   @override
-  List<Object> get props => null;
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
 
   GetVouchersCategoriesDetail(this.categoryId,this.title);
 }
 
 class GetMyVouchers extends KoinKitaEvent {
   @override
-  List<Object> get props => null;
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
   GetMyVouchers();
 }
 
@@ -37,17 +41,20 @@ class RedeemVoucher extends KoinKitaEvent {
   RedeemVoucher(this.id);
 
   @override
-  List<Object> get props => null;
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
 }
 
 class GetVoucherBanner extends KoinKitaEvent {
   @override
-  List<Object> get props => null;
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
   GetVoucherBanner();
 }
 
 class GetVoucherCategories extends KoinKitaEvent {
   @override
-  List<Object> get props => null;
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
   GetVoucherCategories();
 }

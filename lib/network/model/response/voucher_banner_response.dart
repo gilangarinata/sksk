@@ -14,8 +14,8 @@ class VoucherBannerResponse {
     this.data,
   });
 
-  int status;
-  List<Datum> data;
+  int? status;
+  List<Datum>? data;
 
   factory VoucherBannerResponse.fromJson(Map<String, dynamic> json) => VoucherBannerResponse(
     status: json["status"],
@@ -24,7 +24,7 @@ class VoucherBannerResponse {
 
   Map<String, dynamic> toJson() => {
     "status": status,
-    "data": List<dynamic>.from(data.map((x) => x.toJson())),
+    "data": List<dynamic>.from(data!.map((x) => x.toJson())),
   };
 }
 
@@ -36,10 +36,10 @@ class Datum {
     this.redirect_url
   });
 
-  int id;
-  String name;
-  String image;
-  String redirect_url;
+  int? id;
+  String? name;
+  String? image;
+  String? redirect_url;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
     id: json["id"],

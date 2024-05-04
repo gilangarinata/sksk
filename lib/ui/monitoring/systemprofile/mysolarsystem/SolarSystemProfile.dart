@@ -5,9 +5,9 @@ import 'package:solar_kita/res/my_strings.dart';
 import 'package:solar_kita/res/my_text.dart';
 
 class SolarSystemProfile extends StatelessWidget {
-  Size size;
+  late Size size;
 
-  List<SolarSystemProfle> solarSystemProfle;
+  List<SolarSystemProfle>? solarSystemProfle;
 
 
   SolarSystemProfile(this.solarSystemProfle);
@@ -35,7 +35,7 @@ class SolarSystemProfile extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   width: size.width / 2,
                   child: MyText.myTextDescription(
-                      ": " + (solarSystemProfle != null ? solarSystemProfle[0].pvSysPower : "-"), MyColors.grey_60)),
+                      ": " + (solarSystemProfle != null ? solarSystemProfle![0].pvSysPower.toString() : "-"), MyColors.grey_60)),
             ],
           ),
           SizedBox(height: 10,),
@@ -49,7 +49,7 @@ class SolarSystemProfile extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   width: size.width / 2,
                   child: MyText.myTextDescription(
-                      ": " + (solarSystemProfle != null ? solarSystemProfle[0].commisioning : "-"), MyColors.grey_60)),
+                      ": " + (solarSystemProfle != null ? solarSystemProfle![0].commisioning.toString() : "-"), MyColors.grey_60)),
             ],
           ),
           SizedBox(height: 10,),
@@ -67,7 +67,7 @@ class SolarSystemProfile extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     text: TextSpan(
                       style: TextStyle(color: MyColors.grey_60, fontSize: 16.0),
-                      text: ": "+ (solarSystemProfle != null ? solarSystemProfle[0].location : "-"),
+                      text: ": "+ (solarSystemProfle != null ? solarSystemProfle![0].location.toString() : "-"),
                     ),
                   ),
               )
@@ -83,7 +83,7 @@ class SolarSystemProfile extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   width: size.width / 2,
                   child: MyText.myTextDescription(
-                      ": "+ (solarSystemProfle != null ? solarSystemProfle[0].modules.toString() : "-"), MyColors.grey_60)),
+                      ": "+ (solarSystemProfle != null ? solarSystemProfle![0].modules.toString() : "-"), MyColors.grey_60)),
             ],
           ),
           SizedBox(height: 10,),
@@ -96,7 +96,7 @@ class SolarSystemProfile extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   width: size.width / 2,
                   child: MyText.myTextDescription(
-                      ": " + (solarSystemProfle != null ? solarSystemProfle[0].inverter : "-"), MyColors.grey_60)),
+                      ": " + (solarSystemProfle != null ? solarSystemProfle![0].inverter.toString() : "-"), MyColors.grey_60)),
             ],
           ),
           SizedBox(height: 10,),
@@ -110,7 +110,7 @@ class SolarSystemProfile extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   width: size.width / 2,
                   child: MyText.myTextDescription(
-                      ": "+ (solarSystemProfle != null ? solarSystemProfle[0].solarSystemProfleOperator : "-"), MyColors.grey_60)),
+                      ": "+ (solarSystemProfle != null ? solarSystemProfle![0].solarSystemProfleOperator.toString() : "-"), MyColors.grey_60)),
             ],
           ),
           SizedBox(height: 10,),
@@ -123,7 +123,7 @@ class SolarSystemProfile extends StatelessWidget {
               Container(
                   alignment: Alignment.centerLeft,
                   width: size.width / 2,
-                  child: MyText.myTextDescription(": "+ (solarSystemProfle != null ? solarSystemProfle[0].communication : "-"), MyColors.grey_60)),
+                  child: MyText.myTextDescription(": "+ (solarSystemProfle != null ? solarSystemProfle![0].communication.toString() : "-"), MyColors.grey_60)),
             ],
           ),
           SizedBox(height: 40,),

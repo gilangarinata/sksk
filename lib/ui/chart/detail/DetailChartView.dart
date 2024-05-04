@@ -10,7 +10,7 @@ class DetailChartView extends StatefulWidget {
 
 class _DetailChartViewState extends State<DetailChartView> {
 
-  bool isShowingMainData;
+  late bool isShowingMainData;
 
   @override
   void initState() {

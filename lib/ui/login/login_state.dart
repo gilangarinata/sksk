@@ -7,18 +7,19 @@ import 'package:solar_kita/network/model/response/graph_year_response.dart';
 import 'package:solar_kita/network/model/response/login_response.dart';
 import 'package:solar_kita/network/model/response/system_profile_response.dart';
 
+
 abstract class LoginState extends Equatable {}
 
 class LoginSuccess extends LoginState {
   final LoginResponse items;
-  LoginSuccess({@required this.items});
+  LoginSuccess({required this.items});
   @override
   List<Object> get props => [items];
 }
 
 class LoginError extends LoginState {
   final String message;
-  LoginError({@required this.message});
+  LoginError({required this.message});
   @override
   List<Object> get props => [message];
 }
@@ -26,11 +27,13 @@ class LoginError extends LoginState {
 class InitialState extends LoginState {
   InitialState();
   @override
-  List<Object> get props => null;
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
 }
 
 class LoadingState extends LoginState {
   LoadingState();
   @override
-  List<Object> get props => null;
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
 }
